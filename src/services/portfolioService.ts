@@ -66,6 +66,10 @@ export async function initializeDatabase() {
 // Realtime listeners
 export function subscribeToProfile(callback: (profile: Profile) => void) {
   const profileRef = doc(db, PROFILE_COLLECTION, 'main');
+  
+  // Force sync the latest initialProfile into Firestore
+  setDoc(profileRef, initialProfile, { merge: true });
+
   return onSnapshot(
     profileRef,
     (snap) => {
