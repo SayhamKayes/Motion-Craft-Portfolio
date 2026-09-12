@@ -1,6 +1,6 @@
 <div align="center">
   <img src="public/assets/icon.png" width="150" alt="Sayham Kayes Logo" />
-  <h1>Sayham Kayes — Portfolio</h1>
+  <h1>Sayham Kayes - Portfolio</h1>
   <p><strong>A Highly Interactive, 3D Parallax & Snap-Scrolling Developer Portfolio</strong></p>
 </div>
 
