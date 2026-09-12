@@ -33,11 +33,13 @@ export interface Profile {
   statement: string;
   availability: string;
   email: string;
-  github: string;
-  twitter: string;
-  dribbble: string;
-  codepen: string;
-  linkedin: string;
+  github?: string;
+  twitter?: string;
+  dribbble?: string;
+  whatsapp?: string;
+  linkedin?: string;
+  facebook?: string;
+  instagram?: string;
   resumeUrl: string;
   awards: string[];
 }
