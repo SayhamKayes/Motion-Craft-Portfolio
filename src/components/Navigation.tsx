@@ -23,11 +23,11 @@ export const Navigation: React.FC<NavigationProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const sections = [
-    { num: '01', label: 'HOME', jp: 'ホーム' },
-    { num: '02', label: 'WORKS', jp: '実績' },
-    { num: '03', label: 'ABOUT', jp: '私について' },
-    { num: '04', label: 'SKILLS', jp: 'スキル' },
-    { num: '05', label: 'CONTACT', jp: 'お問い合わせ' },
+    { num: '01', label: 'HOME' },
+    { num: '02', label: 'WORKS' },
+    { num: '03', label: 'ABOUT' },
+    { num: '04', label: 'SKILLS' },
+    { num: '05', label: 'CONTACT' },
   ];
 
   const handleNavClick = (idx: number) => {
@@ -49,9 +49,9 @@ export const Navigation: React.FC<NavigationProps> = ({
           className="group flex items-center gap-3 text-left focus:outline-none"
           title="Return to Home"
         >
-          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-pink-500 via-purple-600 to-cyan-400 p-[1.5px] transition-transform duration-300 group-hover:scale-105 shadow-[0_0_15px_rgba(236,72,153,0.3)]">
-            <div className="w-full h-full bg-[#0b0c12] rounded-[6.5px] flex items-center justify-center font-display font-black text-xs text-white tracking-widest">
-              KY
+          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-500 p-[1.5px] transition-transform duration-300 group-hover:scale-105 shadow-[0_0_15px_rgba(20,184,166,0.3)]">
+            <div className="w-full h-full bg-[#0b0c12] rounded-[6.5px] flex items-center justify-center overflow-hidden">
+              <img src="/assets/icon.png" alt="Logo" className="w-full h-full object-contain" />
             </div>
           </div>
           <div>
@@ -59,14 +59,9 @@ export const Navigation: React.FC<NavigationProps> = ({
               <span className="font-display font-extrabold text-sm sm:text-base tracking-wider text-white group-hover:text-cyan-400 transition-colors">
                 {profile.name.toUpperCase()}
               </span>
-              {settings.showJapaneseKanji && (
-                <span className="font-japanese text-xs px-1.5 py-0.5 rounded bg-white/10 text-white/70 border border-white/10">
-                  {profile.kanjiName}
-                </span>
-              )}
             </div>
             <p className="text-[10px] tracking-widest text-white/50 uppercase font-mono-code hidden sm:block">
-              Web Designer &amp; Front-End
+              Full Stack AI Developer
             </p>
           </div>
         </button>
@@ -80,11 +75,10 @@ export const Navigation: React.FC<NavigationProps> = ({
                 key={sec.num}
                 id={`nav-link-${sec.label.toLowerCase()}`}
                 onClick={() => handleNavClick(idx)}
-                className={`relative px-4 py-1.5 rounded-full text-xs font-mono-code tracking-wider transition-all duration-300 ${
-                  isActive
-                    ? 'text-white bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-cyan-500/20 border border-cyan-400/40 shadow-[0_0_12px_rgba(34,211,238,0.2)] font-semibold'
-                    : 'text-white/60 hover:text-white hover:bg-white/[0.06]'
-                }`}
+                className={`relative px-4 py-1.5 rounded-full text-xs font-mono-code tracking-wider transition-all duration-300 ${isActive
+                  ? 'text-white bg-gradient-to-r from-emerald-500/20 via-teal-500/20 to-cyan-500/20 border border-cyan-400/40 shadow-[0_0_12px_rgba(34,211,238,0.2)] font-semibold'
+                  : 'text-white/60 hover:text-white hover:bg-white/[0.06]'
+                  }`}
               >
                 <span className="text-cyan-400/70 mr-1 text-[10px]">{sec.num}</span>
                 <span>{sec.label}</span>
@@ -102,11 +96,10 @@ export const Navigation: React.FC<NavigationProps> = ({
               playSound('toggle', !settings.soundEnabled);
               onToggleSound();
             }}
-            className={`p-2 sm:px-3 sm:py-2 rounded-full border text-xs font-mono-code flex items-center gap-2 transition-all ${
-              settings.soundEnabled
-                ? 'border-cyan-500/40 bg-cyan-950/30 text-cyan-300 hover:border-cyan-400'
-                : 'border-white/10 bg-white/[0.03] text-white/40 hover:text-white/70'
-            }`}
+            className={`p-2 sm:px-3 sm:py-2 rounded-full border text-xs font-mono-code flex items-center gap-2 transition-all ${settings.soundEnabled
+              ? 'border-cyan-500/40 bg-cyan-950/30 text-cyan-300 hover:border-cyan-400'
+              : 'border-white/10 bg-white/[0.03] text-white/40 hover:text-white/70'
+              }`}
             title={settings.soundEnabled ? 'Disable Audio Effects' : 'Enable Audio Effects'}
           >
             {settings.soundEnabled ? (
@@ -129,10 +122,10 @@ export const Navigation: React.FC<NavigationProps> = ({
               playSound('click', settings.soundEnabled);
               onOpenAdmin();
             }}
-            className="px-3 py-2 rounded-full border border-purple-500/40 bg-purple-950/30 text-purple-300 hover:bg-purple-900/40 hover:border-purple-400 transition-all text-xs font-mono-code flex items-center gap-2 shadow-[0_0_15px_rgba(168,85,247,0.15)]"
+            className="px-3 py-2 rounded-full border border-teal-500/40 bg-teal-950/30 text-teal-300 hover:bg-teal-900/40 hover:border-teal-400 transition-all text-xs font-mono-code flex items-center gap-2 shadow-[0_0_15px_rgba(20,184,166,0.15)]"
             title="Manage Portfolio Content & Database"
           >
-            <Shield className="w-3.5 h-3.5 text-purple-400" />
+            <Shield className="w-3.5 h-3.5 text-teal-400" />
             <span className="hidden sm:inline text-[11px] tracking-wider font-semibold">ADMIN CMS</span>
           </button>
 
@@ -168,17 +161,16 @@ export const Navigation: React.FC<NavigationProps> = ({
                 key={sec.num}
                 id={`mobile-nav-link-${sec.label.toLowerCase()}`}
                 onClick={() => handleNavClick(idx)}
-                className={`w-full flex items-center justify-between py-3 border-b border-white/10 text-left transition-all ${
-                  activeSection === idx
-                    ? 'text-cyan-400 border-cyan-400/40 pl-3'
-                    : 'text-white/80 hover:text-white'
-                }`}
+                className={`w-full flex items-center justify-between py-3 border-b border-white/10 text-left transition-all ${activeSection === idx
+                  ? 'text-cyan-400 border-cyan-400/40 pl-3'
+                  : 'text-white/80 hover:text-white'
+                  }`}
               >
                 <div className="flex items-center gap-4">
                   <span className="font-mono-code text-xs text-white/40">{sec.num}</span>
                   <span className="font-display font-extrabold text-2xl tracking-tight">{sec.label}</span>
                 </div>
-                <span className="font-japanese text-sm text-white/30">{sec.jp}</span>
+                {/* <span className="font-japanese text-sm text-white/30">{sec.jp}</span> */}
               </button>
             ))}
           </div>
@@ -190,7 +182,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                 onOpenAdmin();
                 setMobileMenuOpen(false);
               }}
-              className="text-purple-400 hover:text-purple-300 underline underline-offset-4"
+              className="text-teal-400 hover:text-teal-300 underline underline-offset-4"
             >
               Open Admin CMS →
             </button>
