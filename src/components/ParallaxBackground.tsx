@@ -87,7 +87,7 @@ export const ParallaxBackground: React.FC<ParallaxBackgroundProps> = ({
         }}
       >
         <div className="text-white/[0.03] font-display font-black text-[18vw] leading-none uppercase tracking-tighter select-none whitespace-nowrap">
-          {activeSection === 0 && 'KUON YAGI'}
+          {activeSection === 0 && 'SAYHAM KAYES'}
           {activeSection === 1 && 'SELECTED WORKS'}
           {activeSection === 2 && 'BIOGRAPHY'}
           {activeSection === 3 && 'CAPABILITIES'}
@@ -96,7 +96,7 @@ export const ParallaxBackground: React.FC<ParallaxBackgroundProps> = ({
       </div>
 
       {/* Layer 2: Japanese Kanji Watermark Characters */}
-      {settings.showJapaneseKanji && (
+      {/* {settings.showJapaneseKanji && (
         <div
           className="absolute inset-0 flex justify-between items-center px-12 transition-transform duration-300 ease-out will-change-transform opacity-30"
           style={{
@@ -118,7 +118,7 @@ export const ParallaxBackground: React.FC<ParallaxBackgroundProps> = ({
             {activeSection === 4 && '和'}
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Layer 3: Vibrant Colorful Dynamic Fluid SVG Waves (Kuon Yagi Signature) */}
       <div
@@ -173,7 +173,7 @@ export const ParallaxBackground: React.FC<ParallaxBackgroundProps> = ({
         +
       </div>
       <div
-        className="absolute top-[70%] left-[8%] text-pink-400/50 font-mono-code text-xl will-change-transform select-none"
+        className="absolute top-[70%] left-[8%] text-emerald-400/50 font-mono-code text-xl will-change-transform select-none"
         style={{ transform: `translate3d(${mx * -38}px, ${my * -38}px, 0)` }}
       >
         +
@@ -193,7 +193,7 @@ export const ParallaxBackground: React.FC<ParallaxBackgroundProps> = ({
 
       {/* Geometric Wire Rings */}
       <div
-        className="absolute top-[15%] right-[28%] w-32 h-32 rounded-full border border-pink-500/20 will-change-transform animate-spin-slow select-none"
+        className="absolute top-[15%] right-[28%] w-32 h-32 rounded-full border border-emerald-500/20 will-change-transform animate-spin-slow select-none"
         style={{ transform: `translate3d(${mx * 30}px, ${my * 30}px, 0)` }}
       />
       <div
@@ -211,7 +211,7 @@ export const ParallaxBackground: React.FC<ParallaxBackgroundProps> = ({
         style={{ transform: `translate3d(${mx * 28}px, ${my * 28}px, 0)` }}
       />
       <div
-        className="absolute top-2/3 left-1/5 w-64 h-64 rounded-full bg-pink-500/10 blur-3xl will-change-transform"
+        className="absolute top-2/3 left-1/5 w-64 h-64 rounded-full bg-emerald-500/10 blur-3xl will-change-transform"
         style={{ transform: `translate3d(${mx * -35}px, ${my * -35}px, 0)` }}
       />
 
