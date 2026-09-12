@@ -1,80 +1,87 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <script>
-      (function() {
-        try {
-          var g = typeof window !== 'undefined' ? window : (typeof globalThis !== 'undefined' ? globalThis : self);
-          if (g) {
-            var currentFetch = g.fetch;
-            var desc = Object.getOwnPropertyDescriptor(g, 'fetch');
-            if (desc) {
-              if (desc.configurable) {
-                var storedFetch = currentFetch;
-                Object.defineProperty(g, 'fetch', {
-                  get: function() {
-                    return storedFetch;
-                  },
-                  set: function(fn) {
-                    storedFetch = fn;
-                  },
-                  configurable: true,
-                  enumerable: desc.enumerable !== undefined ? desc.enumerable : true
-                });
-              }
-            } else if (currentFetch) {
-              var storedFetch = currentFetch;
-              try {
-                Object.defineProperty(g, 'fetch', {
-                  get: function() {
-                    return storedFetch;
-                  },
-                  set: function(fn) {
-                    storedFetch = fn;
-                  },
-                  configurable: true,
-                  enumerable: true
-                });
-              } catch (e) {}
-            }
 
-            if (typeof Window !== 'undefined' && Window.prototype) {
-              var protoDesc = Object.getOwnPropertyDescriptor(Window.prototype, 'fetch');
-              if (protoDesc && protoDesc.configurable && (!protoDesc.set || protoDesc.writable === false)) {
-                var protoFetch = protoDesc.get ? protoDesc.get.call(g) : protoDesc.value;
-                Object.defineProperty(Window.prototype, 'fetch', {
-                  get: function() {
-                    return protoFetch;
-                  },
-                  set: function(fn) {
-                    protoFetch = fn;
-                  },
-                  configurable: true,
-                  enumerable: protoDesc.enumerable !== undefined ? protoDesc.enumerable : true
-                });
-              }
+<head>
+  <script>
+    (function () {
+      try {
+        var g = typeof window !== 'undefined' ? window : (typeof globalThis !== 'undefined' ? globalThis : self);
+        if (g) {
+          var currentFetch = g.fetch;
+          var desc = Object.getOwnPropertyDescriptor(g, 'fetch');
+          if (desc) {
+            if (desc.configurable) {
+              var storedFetch = currentFetch;
+              Object.defineProperty(g, 'fetch', {
+                get: function () {
+                  return storedFetch;
+                },
+                set: function (fn) {
+                  storedFetch = fn;
+                },
+                configurable: true,
+                enumerable: desc.enumerable !== undefined ? desc.enumerable : true
+              });
+            }
+          } else if (currentFetch) {
+            var storedFetch = currentFetch;
+            try {
+              Object.defineProperty(g, 'fetch', {
+                get: function () {
+                  return storedFetch;
+                },
+                set: function (fn) {
+                  storedFetch = fn;
+                },
+                configurable: true,
+                enumerable: true
+              });
+            } catch (e) { }
+          }
+
+          if (typeof Window !== 'undefined' && Window.prototype) {
+            var protoDesc = Object.getOwnPropertyDescriptor(Window.prototype, 'fetch');
+            if (protoDesc && protoDesc.configurable && (!protoDesc.set || protoDesc.writable === false)) {
+              var protoFetch = protoDesc.get ? protoDesc.get.call(g) : protoDesc.value;
+              Object.defineProperty(Window.prototype, 'fetch', {
+                get: function () {
+                  return protoFetch;
+                },
+                set: function (fn) {
+                  protoFetch = fn;
+                },
+                configurable: true,
+                enumerable: protoDesc.enumerable !== undefined ? protoDesc.enumerable : true
+              });
             }
           }
-        } catch (err) {
-          console.warn('[fetch-guard] Warning:', err);
         }
-      })();
-    </script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kuon Yagi — Web Designer &amp; Front-End Developer Portfolio</title>
-    <meta name="description" content="Interactive replica of Japanese web designer Kuon Yagi's iconic portfolio with full-screen snap scrolling, 3D mouse parallax, SVG animations, and a full content management Admin Panel." />
-    <meta property="og:title" content="Kuon Yagi — Web Designer &amp; Front-End Developer Portfolio" />
-    <meta property="og:description" content="Interactive replica of Japanese web designer Kuon Yagi's iconic portfolio with full-screen snap scrolling, 3D mouse parallax, SVG animations, and a full content management Admin Panel." />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Noto+Sans+JP:wght@300;400;500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+      } catch (err) {
+        console.warn('[fetch-guard] Warning:', err);
+      }
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sayham Kayes - Full Stack AI Developer</title>
+  <meta name="description"
+    content="Full Stack Developer with 3+ years of freelance and remote experience and a strong foundation in Python (Django) and React.js." />
+  <meta property="og:title" content="Sayham Kayes - Full Stack AI Developer" />
+  <meta property="og:description"
+    content="Full Stack Developer with 3+ years of freelance and remote experience and a strong foundation in Python (Django) and React.js." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Noto+Sans+JP:wght@300;400;500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@500;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="shortcut icon" href="/assets/icon.png" type="image/x-icon">
+</head>
 
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>
