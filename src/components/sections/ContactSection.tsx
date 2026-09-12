@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Send, CheckCircle, Github, Twitter, Dribbble, Codepen, Linkedin, MapPin, Copy, Check, ExternalLink } from 'lucide-react';
+import { Mail, Send, CheckCircle, Github, Twitter, Dribbble, Codepen, Linkedin, Instagram, Facebook, MapPin, Copy, Check, ExternalLink, MessageCircle } from 'lucide-react';
 import { Profile, SiteSettings } from '../../types';
 import { sendContactMessage } from '../../services/portfolioService';
 import { playSound } from '../../utils/audio';
@@ -68,16 +68,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     >
       {/* Header */}
       <div
-        className={`transition-all duration-700 ${
-          isActive ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'
-        }`}
+        className={`transition-all duration-700 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'
+          }`}
       >
         <div className="flex items-center gap-2 text-xs font-mono-code text-cyan-400 uppercase tracking-widest mb-1">
           <Mail className="w-3.5 h-3.5" />
           <span>05 / Communication</span>
-          {settings.showJapaneseKanji && (
-            <span className="font-japanese text-white/40">お問い合わせ</span>
-          )}
         </div>
         <h2 className="font-display font-black text-3xl sm:text-5xl text-white tracking-tight">
           Let&apos;s Build Together
@@ -92,9 +88,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Info: Contact details & Socials (5 cols) */}
           <div
-            className={`lg:col-span-5 space-y-5 transition-all duration-700 delay-200 ${
-              isActive ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
-            }`}
+            className={`lg:col-span-5 space-y-5 transition-all duration-700 delay-200 ${isActive ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
+              }`}
           >
             <p className="text-sm sm:text-base text-white/70 leading-relaxed font-body">
               Interested in a project inquiry, design consultation, or creative engineering collaboration? Feel free to reach out directly.
@@ -105,7 +100,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
               <div>
                 <div className="text-[10px] font-mono-code text-cyan-400 uppercase">Direct Email</div>
                 <div className="text-sm sm:text-base font-mono-code text-white font-semibold">
-                  {profile.email}
+                  <a className="cursor-pointer hover:text-white text-decoration-none" href={`mailto:${profile.email}`} target="_blank" rel="noopener noreferrer">{profile.email}</a>
                 </div>
               </div>
               <button
@@ -120,12 +115,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
 
             {/* Studio Info */}
             <div className="p-4 rounded-xl glass-panel border border-white/10 space-y-2">
-              <div className="flex items-center gap-2 text-xs font-mono-code text-pink-400 uppercase">
+              <div className="flex items-center gap-2 text-xs font-mono-code text-emerald-400 uppercase">
                 <MapPin className="w-3.5 h-3.5" />
-                <span>Tokyo Studio Location</span>
+                <span>Dhaka, Bangladesh</span>
               </div>
               <p className="text-xs text-white/60 font-body">
-                Shibuya &amp; Roppongi Creative Corridor, Tokyo, Japan / Kobe Harbor Studio.
+                <a className="cursor-pointer hover:text-white text-decoration-none" href="https://maps.app.goo.gl/Nos59FfwPTYPAhb68" target="_blank" rel="noopener noreferrer">House #01, Road #17, Block - New C, Mirpur-1, Dhaka, Bangladesh.</a>
               </p>
             </div>
 
@@ -146,39 +141,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                     <Github className="w-4 h-4" />
                   </a>
                 )}
-                {profile.twitter && (
-                  <a
-                    href={profile.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2.5 rounded-xl glass-panel border border-white/10 text-white/70 hover:text-pink-400 hover:border-pink-400/40 transition-colors"
-                    title="Twitter / X"
-                  >
-                    <Twitter className="w-4 h-4" />
-                  </a>
-                )}
-                {profile.dribbble && (
-                  <a
-                    href={profile.dribbble}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2.5 rounded-xl glass-panel border border-white/10 text-white/70 hover:text-pink-400 hover:border-pink-400/40 transition-colors"
-                    title="Dribbble"
-                  >
-                    <Dribbble className="w-4 h-4" />
-                  </a>
-                )}
-                {profile.codepen && (
-                  <a
-                    href={profile.codepen}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2.5 rounded-xl glass-panel border border-white/10 text-white/70 hover:text-purple-400 hover:border-purple-400/40 transition-colors"
-                    title="CodePen"
-                  >
-                    <Codepen className="w-4 h-4" />
-                  </a>
-                )}
                 {profile.linkedin && (
                   <a
                     href={profile.linkedin}
@@ -190,15 +152,76 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                     <Linkedin className="w-4 h-4" />
                   </a>
                 )}
+                {profile.whatsapp && (
+                  <a
+                    href={profile.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 rounded-xl glass-panel border border-white/10 text-white/70 hover:text-emerald-400 hover:border-emerald-400/40 transition-colors"
+                    title="WhatsApp"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      className="w-4 h-4"
+                      fill="currentColor"
+                    >
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+                    </svg>
+                  </a>
+                )}
+                {profile.facebook && (
+                  <a
+                    href={profile.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 rounded-xl glass-panel border border-white/10 text-white/70 hover:text-blue-500 hover:border-blue-500/40 transition-colors"
+                    title="Facebook"
+                  >
+                    <Facebook className="w-4 h-4" />
+                  </a>
+                )}
+                {profile.instagram && (
+                  <a
+                    href={profile.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 rounded-xl glass-panel border border-white/10 text-white/70 hover:text-emerald-500 hover:border-emerald-500/40 transition-colors"
+                    title="Instagram"
+                  >
+                    <Instagram className="w-4 h-4" />
+                  </a>
+                )}
+                {profile.twitter && (
+                  <a
+                    href={profile.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 rounded-xl glass-panel border border-white/10 text-white/70 hover:text-emerald-400 hover:border-emerald-400/40 transition-colors"
+                    title="Twitter / X"
+                  >
+                    <Twitter className="w-4 h-4" />
+                  </a>
+                )}
+                {profile.dribbble && (
+                  <a
+                    href={profile.dribbble}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 rounded-xl glass-panel border border-white/10 text-white/70 hover:text-emerald-400 hover:border-emerald-400/40 transition-colors"
+                    title="Dribbble"
+                  >
+                    <Dribbble className="w-4 h-4" />
+                  </a>
+                )}
               </div>
             </div>
           </div>
 
           {/* Right Form: Real Firestore Message Submission (7 cols) */}
           <div
-            className={`lg:col-span-7 transition-all duration-700 delay-300 ${
-              isActive ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
-            }`}
+            className={`lg:col-span-7 transition-all duration-700 delay-300 ${isActive ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
+              }`}
           >
             <div className="p-6 sm:p-7 rounded-2xl glass-panel border border-white/10 shadow-xl">
               {isSuccess ? (
@@ -213,7 +236,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                     Message Sent Successfully!
                   </h3>
                   <p className="text-xs sm:text-sm text-white/70 max-w-sm mx-auto font-body">
-                    Thank you for reaching out. Your message has been saved into the database and Kuon will respond shortly.
+                    Thank you for reaching out. Your message has been saved into the database and Sayham will respond shortly.
                   </p>
                   <button
                     onClick={() => setIsSuccess(false)}
@@ -226,10 +249,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                 <form id="contact-form" onSubmit={handleSubmit} className="space-y-4">
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-xs font-mono-code text-cyan-400 uppercase tracking-wider">
-                      Send Direct Message / 送信
-                    </span>
-                    <span className="text-[10px] font-mono-code text-white/40">
-                      SAVED TO FIRESTORE
+                      Send Direct Message
                     </span>
                   </div>
 
@@ -316,14 +336,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                     id="contact-submit-btn"
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-3.5 rounded-xl bg-gradient-to-r from-pink-500 via-purple-600 to-cyan-500 hover:from-pink-600 hover:to-cyan-600 text-white font-mono-code text-xs font-bold uppercase tracking-wider transition-all duration-300 hover:shadow-[0_0_20px_rgba(236,72,153,0.4)] flex items-center justify-center gap-2 disabled:opacity-50"
+                    className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-600 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white font-mono-code text-xs font-bold uppercase tracking-wider transition-all duration-300 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] flex items-center justify-center gap-2 disabled:opacity-50"
                   >
                     {isSubmitting ? (
-                      <span>TRANSMITTING MESSAGE...</span>
+                      <span>SUBMITTING MESSAGE...</span>
                     ) : (
                       <>
                         <Send className="w-3.5 h-3.5" />
-                        <span>TRANSMIT INQUIRY (送信)</span>
+                        <span>SUBMIT MESSAGE</span>
                       </>
                     )}
                   </button>
@@ -336,23 +356,22 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
 
       {/* Bottom Hint & Reference */}
       <div
-        className={`flex flex-wrap items-center justify-between gap-3 text-xs text-white/40 font-mono-code pt-3 border-t border-white/10 transition-all duration-700 delay-500 ${
-          isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-        }`}
+        className={`flex flex-wrap items-center justify-between gap-3 text-xs text-white/40 font-mono-code pt-3 border-t border-white/10 transition-all duration-700 delay-500 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+          }`}
       >
         <div className="flex items-center gap-2">
-          <span>ORIGINAL DESIGN:</span>
+          <span>PORTFOLIO:</span>
           <a
-            href="https://kuon-yagi-portfolio.netlify.app/"
+            href="https://sayhamkayes.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-cyan-400 hover:underline flex items-center gap-1"
           >
-            <span>kuon-yagi-portfolio.netlify.app</span>
+            <span>sayhamkayes.vercel.app</span>
             <ExternalLink className="w-3 h-3" />
           </a>
         </div>
-        <span>© {new Date().getFullYear()} KUON YAGI REPLICA &amp; CMS</span>
+        <span>© {new Date().getFullYear()} | Sayham Kayes</span>
       </div>
     </section>
   );
