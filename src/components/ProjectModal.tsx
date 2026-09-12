@@ -21,7 +21,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
   return (
     <div
       id="project-detail-modal"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 sm:p-6 overflow-y-auto"
+      className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 sm:p-6 overflow-y-auto"
       onClick={onClose}
     >
       <div
@@ -101,7 +101,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
 
           {/* Technology Tags */}
           <div className="space-y-2">
-            <div className="flex items-center gap-1 text-xs font-mono-code text-pink-400 uppercase tracking-wider">
+            <div className="flex items-center gap-1 text-xs font-mono-code text-emerald-400 uppercase tracking-wider">
               <Tag className="w-3 h-3" />
               <span>Implemented Technologies</span>
             </div>
@@ -130,7 +130,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-pink-500 to-cyan-500 hover:from-pink-600 hover:to-cyan-600 text-white font-mono-code text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-[0_0_15px_rgba(34,211,238,0.3)] transition-all"
+              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white font-mono-code text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-[0_0_15px_rgba(34,211,238,0.3)] transition-all"
             >
               <span>Visit Live Case</span>
               <ExternalLink className="w-3.5 h-3.5" />
