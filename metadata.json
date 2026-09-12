@@ -1,0 +1,6 @@
+{
+  "name": "Kuon Yagi Portfolio",
+  "description": "Interactive replica of Japanese web designer Kuon Yagi's iconic portfolio with full-screen snap scrolling, 3D mouse parallax, SVG animations, and a full content management Admin Panel.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

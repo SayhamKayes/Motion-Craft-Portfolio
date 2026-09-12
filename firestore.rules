@@ -1,0 +1,28 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Anyone can read portfolio content (profile, works, skills, settings)
+    match /portfolio_profile/{docId} {
+      allow read: if true;
+      allow write: if true;
+    }
+    match /portfolio_works/{docId} {
+      allow read: if true;
+      allow write: if true;
+    }
+    match /portfolio_skills/{docId} {
+      allow read: if true;
+      allow write: if true;
+    }
+    match /portfolio_settings/{docId} {
+      allow read: if true;
+      allow write: if true;
+    }
+    // Visitors can submit contact messages, anyone can read in admin
+    match /portfolio_messages/{docId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if true;
+    }
+  }
+}
