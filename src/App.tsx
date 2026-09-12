@@ -10,6 +10,7 @@ import { SkillsSection } from './components/sections/SkillsSection';
 import { ContactSection } from './components/sections/ContactSection';
 import { ProjectModal } from './components/ProjectModal';
 import { AdminPanel } from './components/AdminPanel';
+import { AllWorksView } from './components/AllWorksView';
 import { Profile, Project, Skill, SiteSettings, ContactMessage } from './types';
 import {
   initialProfile,
@@ -38,12 +39,12 @@ export default function App() {
 
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isAdminOpen, setIsAdminOpen] = useState<boolean>(false);
+  const [isAllWorksOpen, setIsAllWorksOpen] = useState<boolean>(false);
 
   const totalSections = 5;
   const isScrollingRef = useRef<boolean>(false);
   const touchStartYRef = useRef<number>(0);
 
-  // Initialize and subscribe to Firestore
   useEffect(() => {
     initializeDatabase();
 
@@ -76,7 +77,7 @@ export default function App() {
 
   // FullPage.js Snap-Scroll Wheel Interceptor
   useEffect(() => {
-    if (!settings.snapScrollEnabled || isAdminOpen || selectedProject !== null) {
+    if (!settings.snapScrollEnabled || isAdminOpen || selectedProject !== null || isAllWorksOpen) {
       return;
     }
 
@@ -118,11 +119,11 @@ export default function App() {
 
     window.addEventListener('wheel', handleWheel, { passive: false });
     return () => window.removeEventListener('wheel', handleWheel);
-  }, [activeSection, totalSections, navigateToSection, settings.snapScrollEnabled, isAdminOpen, selectedProject]);
+  }, [activeSection, totalSections, navigateToSection, settings.snapScrollEnabled, isAdminOpen, selectedProject, isAllWorksOpen]);
 
   // Touch Swipe navigation for mobile
   useEffect(() => {
-    if (isAdminOpen || selectedProject !== null) return;
+    if (isAdminOpen || selectedProject !== null || isAllWorksOpen) return;
 
     const handleTouchStart = (e: TouchEvent) => {
       touchStartYRef.current = e.touches[0].clientY;
@@ -157,11 +158,11 @@ export default function App() {
       window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [activeSection, totalSections, navigateToSection, isAdminOpen, selectedProject]);
+  }, [activeSection, totalSections, navigateToSection, isAdminOpen, selectedProject, isAllWorksOpen]);
 
   // Keyboard navigation (Arrow keys, PageUp, PageDown)
   useEffect(() => {
-    if (isAdminOpen || selectedProject !== null) return;
+    if (isAdminOpen || selectedProject !== null || isAllWorksOpen) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
@@ -185,7 +186,7 @@ export default function App() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeSection, totalSections, navigateToSection, isAdminOpen, selectedProject]);
+  }, [activeSection, totalSections, navigateToSection, isAdminOpen, selectedProject, isAllWorksOpen]);
 
   const toggleSound = async () => {
     const updated = !settings.soundEnabled;
@@ -242,6 +243,7 @@ export default function App() {
           projects={projects}
           settings={settings}
           onSelectProject={(proj) => setSelectedProject(proj)}
+          onOpenAllWorks={() => setIsAllWorksOpen(true)}
         />
 
         {/* Section 03: ABOUT */}
@@ -267,6 +269,14 @@ export default function App() {
           settings={settings}
         />
       </main>
+
+      {/* All Works Full View */}
+      <AllWorksView
+        isOpen={isAllWorksOpen}
+        onClose={() => setIsAllWorksOpen(false)}
+        projects={projects}
+        onSelectProject={(proj) => setSelectedProject(proj)}
+      />
 
       {/* Project Case Study Modal */}
       <ProjectModal
