@@ -58,7 +58,7 @@ export const SectionIndicator: React.FC<SectionIndicatorProps> = ({
               <div
                 className={`transition-all duration-300 rounded-full ${
                   isActive
-                    ? 'w-6 h-1.5 bg-gradient-to-r from-pink-500 to-cyan-400 shadow-[0_0_10px_#22d3ee]'
+                    ? 'w-6 h-1.5 bg-gradient-to-r from-emerald-500 to-cyan-400 shadow-[0_0_10px_#22d3ee]'
                     : 'w-1.5 h-1.5 bg-white/30 group-hover:bg-white/70 group-hover:scale-125'
                 }`}
               />
