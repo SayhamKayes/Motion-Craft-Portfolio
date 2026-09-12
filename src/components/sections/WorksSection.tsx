@@ -8,6 +8,7 @@ interface WorksSectionProps {
   projects: Project[];
   settings: SiteSettings;
   onSelectProject: (project: Project) => void;
+  onOpenAllWorks: () => void;
 }
 
 export const WorksSection: React.FC<WorksSectionProps> = ({
@@ -15,33 +16,30 @@ export const WorksSection: React.FC<WorksSectionProps> = ({
   projects,
   settings,
   onSelectProject,
+  onOpenAllWorks,
 }) => {
   const [activeCategory, setActiveCategory] = useState<string>('All');
 
-  const categories = ['All', 'Web Design', 'Creative Coding', 'Art Direction'];
+  const categories: string[] = ['All', ...Array.from(new Set<string>(projects.map((p) => p.category)))];
 
   const filteredProjects = activeCategory === 'All'
     ? projects
-    : projects.filter((p) => p.category.toLowerCase() === activeCategory.toLowerCase());
+    : projects.filter((p) => p.category === activeCategory);
 
   return (
     <section
       id="section-works"
-      className="relative w-full h-screen flex flex-col justify-between px-6 sm:px-16 pt-24 pb-8 overflow-hidden select-none"
+      className="relative w-full h-screen flex flex-col px-6 sm:px-16 pt-30 pb-8 overflow-hidden select-none"
     >
       {/* Header & Filter Bar */}
       <div
-        className={`flex flex-col sm:flex-row sm:items-end justify-between gap-4 transition-all duration-700 ${
-          isActive ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'
-        }`}
+        className={`flex flex-col sm:flex-row sm:items-end justify-between gap-4 transition-all duration-700 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'
+          }`}
       >
         <div>
           <div className="flex items-center gap-2 text-xs font-mono-code text-cyan-400 uppercase tracking-widest mb-1">
             <Layers className="w-3.5 h-3.5" />
             <span>02 / Portfolio Works</span>
-            {settings.showJapaneseKanji && (
-              <span className="font-japanese text-white/40">実績一覧</span>
-            )}
           </div>
           <h2 className="font-display font-black text-3xl sm:text-5xl text-white tracking-tight">
             Selected Works
@@ -50,7 +48,7 @@ export const WorksSection: React.FC<WorksSectionProps> = ({
 
         {/* Categories Tabs */}
         <div className="flex flex-wrap items-center gap-1.5 bg-white/[0.04] p-1 rounded-full border border-white/10 self-start sm:self-auto">
-          {categories.map((cat) => {
+          {categories.map((cat: string) => {
             const isCatActive = activeCategory === cat;
             return (
               <button
@@ -60,11 +58,10 @@ export const WorksSection: React.FC<WorksSectionProps> = ({
                   playSound('hover', settings.soundEnabled);
                   setActiveCategory(cat);
                 }}
-                className={`px-3 py-1 text-[11px] font-mono-code rounded-full transition-all ${
-                  isCatActive
-                    ? 'bg-gradient-to-r from-pink-500 to-cyan-500 text-white font-semibold shadow-[0_0_10px_rgba(236,72,153,0.3)]'
-                    : 'text-white/60 hover:text-white hover:bg-white/[0.05]'
-                }`}
+                className={`px-3 py-1 text-[11px] font-mono-code rounded-full transition-all ${isCatActive
+                  ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-semibold shadow-[0_0_10px_rgba(16,185,129,0.3)]'
+                  : 'text-white/60 hover:text-white hover:bg-white/[0.05]'
+                  }`}
               >
                 {cat}
               </button>
@@ -73,13 +70,13 @@ export const WorksSection: React.FC<WorksSectionProps> = ({
         </div>
       </div>
 
-      {/* Projects Grid Container (with smooth horizontal/vertical scroll if many) */}
+      {/* Projects Grid Container (No Scroll) */}
       <div
         id="works-grid-container"
-        className="my-auto py-3 overflow-y-auto max-h-[66vh] pr-1.5 scrollbar-thin"
+        className="mt-8 py-3 pr-1.5 flex flex-col items-center"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {filteredProjects.map((project, idx) => {
+          {filteredProjects.slice(0, 3).map((project, idx) => {
             return (
               <div
                 key={project.id}
@@ -91,9 +88,8 @@ export const WorksSection: React.FC<WorksSectionProps> = ({
                 style={{
                   transitionDelay: `${idx * 80 + 100}ms`,
                 }}
-                className={`group relative rounded-xl overflow-hidden glass-panel border border-white/10 hover:border-cyan-400/50 transition-all duration-500 cursor-pointer hover:-translate-y-1.5 hover:shadow-[0_15px_30px_rgba(0,0,0,0.5)] ${
-                  isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
+                className={`group relative rounded-xl overflow-hidden glass-panel border border-white/10 hover:border-cyan-400/50 transition-all duration-500 cursor-pointer hover:-translate-y-1.5 hover:shadow-[0_15px_30px_rgba(0,0,0,0.5)] ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                  }`}
               >
                 {/* Image Thumbnail with Overlay */}
                 <div className="relative h-44 sm:h-48 overflow-hidden bg-slate-900">
@@ -126,7 +122,7 @@ export const WorksSection: React.FC<WorksSectionProps> = ({
 
                 {/* Card Content Info */}
                 <div className="p-4 sm:p-5">
-                  <div className="text-[10px] font-mono-code text-pink-400 uppercase tracking-wider mb-1">
+                  <div className="text-[10px] font-mono-code text-emerald-400 uppercase tracking-wider mb-1">
                     Client: {project.client}
                   </div>
                   <h3 className="font-display font-bold text-lg text-white group-hover:text-cyan-300 transition-colors">
@@ -157,18 +153,29 @@ export const WorksSection: React.FC<WorksSectionProps> = ({
             );
           })}
         </div>
+
+        {/* View All Works Button */}
+        <div className={`mt-8 sm:mt-10 flex justify-center w-full transition-all duration-700 delay-500 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <button
+            onClick={() => {
+              playSound('click', settings.soundEnabled);
+              onOpenAllWorks();
+            }}
+            className="px-6 py-2.5 rounded-full border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/10 text-xs font-mono-code tracking-wider uppercase font-semibold transition-all flex items-center gap-2"
+          >
+            <Layers className="w-4 h-4" />
+            <span>View All Works</span>
+          </button>
+        </div>
       </div>
 
       {/* Bottom Hint */}
       <div
-        className={`flex items-center justify-between text-xs text-white/40 font-mono-code pt-3 border-t border-white/10 transition-all duration-700 delay-500 ${
-          isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-        }`}
+        className={`mt-auto flex items-center justify-between text-xs text-white/40 font-mono-code pt-3 border-t border-white/10 transition-all duration-700 delay-500 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+          }`}
       >
-        <span>CLICK ANY CARD FOR DETAILED CASE STUDY</span>
-        <span className="text-cyan-400/80 hidden sm:inline">
-          {projects.length} PROJECTS IN DATABASE
-        </span>
+        <span>CLICK ANY PROJECT &amp; SEE DETAIL</span>
+        <span className="text-cyan-400/80">FEATURING BEST WORKS</span>
       </div>
     </section>
   );
