@@ -18,20 +18,20 @@ export const HomeSection: React.FC<HomeSectionProps> = ({
   onExploreWorks,
   onContactClick,
 }) => {
-  const [jstTime, setJstTime] = useState('');
+  const [dhaTime, setdhaTime] = useState('');
 
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      // JST is UTC+9
+      // DHA is UTC+6
       const options: Intl.DateTimeFormatOptions = {
-        timeZone: 'Asia/Tokyo',
+        timeZone: 'Asia/Dhaka',
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
-        hour12: false,
+        hour12: true,
       };
-      setJstTime(new Intl.DateTimeFormat('en-US', options).format(now) + ' JST');
+      setdhaTime(new Intl.DateTimeFormat('en-US', options).format(now) + ' DHA');
     };
     updateTime();
     const interval = setInterval(updateTime, 1000);
@@ -43,11 +43,10 @@ export const HomeSection: React.FC<HomeSectionProps> = ({
       id="section-home"
       className="relative w-full h-screen flex flex-col justify-between px-6 sm:px-16 pt-28 pb-12 overflow-hidden select-none"
     >
-      {/* Top Status Bar: Location, Availability & Tokyo Clock */}
+      {/* Top Status Bar: Location, Availability & Dhaka Clock */}
       <div
-        className={`flex flex-wrap items-center justify-between gap-4 transition-all duration-700 ${
-          isActive ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'
-        }`}
+        className={`flex flex-wrap items-center justify-between gap-4 transition-all duration-700 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'
+          }`}
       >
         <div className="flex items-center gap-3">
           <span className="relative flex h-2.5 w-2.5">
@@ -66,7 +65,7 @@ export const HomeSection: React.FC<HomeSectionProps> = ({
           </div>
           <div className="hidden sm:flex items-center gap-1.5 bg-white/[0.05] px-2.5 py-1 rounded border border-white/10">
             <Clock className="w-3.5 h-3.5 text-cyan-400" />
-            <span className="text-white/80">{jstTime}</span>
+            <span className="text-white/80">{dhaTime}</span>
           </div>
         </div>
       </div>
@@ -75,9 +74,8 @@ export const HomeSection: React.FC<HomeSectionProps> = ({
       <div className="my-auto max-w-5xl">
         {/* Eyebrow / Kanji Subtitle */}
         <div
-          className={`flex items-center gap-3 mb-4 transition-all duration-700 delay-100 ${
-            isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-          }`}
+          className={`flex items-center gap-3 mb-4 transition-all duration-700 delay-100 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+            }`}
         >
           <div className="h-px w-8 bg-gradient-to-r from-pink-500 to-cyan-400" />
           <span className="font-mono-code text-xs sm:text-sm tracking-[0.25em] text-cyan-400 uppercase font-bold">
@@ -93,9 +91,8 @@ export const HomeSection: React.FC<HomeSectionProps> = ({
         {/* Hero Title */}
         <h1
           id="hero-main-title"
-          className={`font-display font-black text-5xl sm:text-7xl lg:text-8xl tracking-tight leading-[0.95] text-white transition-all duration-700 delay-200 ${
-            isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}
+          className={`font-display font-black text-5xl sm:text-7xl lg:text-8xl tracking-tight leading-[0.95] text-white transition-all duration-700 delay-200 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
         >
           <span className="block">{profile.name.split(' ')[0]}</span>
           <span className="block bg-gradient-to-r from-white via-cyan-200 to-pink-300 bg-clip-text text-transparent">
@@ -105,27 +102,24 @@ export const HomeSection: React.FC<HomeSectionProps> = ({
 
         {/* Profession Tagline */}
         <div
-          className={`mt-4 sm:mt-6 text-base sm:text-2xl font-display font-medium text-white/80 transition-all duration-700 delay-300 ${
-            isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-          }`}
+          className={`mt-4 sm:mt-6 text-base sm:text-2xl font-display font-medium text-white/80 transition-all duration-700 delay-300 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+            }`}
         >
           {profile.title}
         </div>
 
         {/* Brief Statement */}
         <p
-          className={`mt-3 max-w-2xl text-xs sm:text-sm text-white/60 leading-relaxed font-body transition-all duration-700 delay-400 ${
-            isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-          }`}
+          className={`mt-3 max-w-2xl text-xs sm:text-sm text-white/60 leading-relaxed font-body transition-all duration-700 delay-400 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+            }`}
         >
           {profile.statement}
         </p>
 
         {/* Interactive Action Buttons */}
         <div
-          className={`mt-8 flex flex-wrap items-center gap-4 transition-all duration-700 delay-500 ${
-            isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-          }`}
+          className={`mt-8 flex flex-wrap items-center gap-4 transition-all duration-700 delay-500 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+            }`}
         >
           <button
             id="hero-explore-works-btn"
@@ -135,7 +129,7 @@ export const HomeSection: React.FC<HomeSectionProps> = ({
             }}
             className="group px-7 py-3.5 rounded-full bg-gradient-to-r from-pink-500 via-purple-600 to-cyan-500 text-white font-mono-code text-xs tracking-wider uppercase font-semibold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(236,72,153,0.4)] flex items-center gap-2"
           >
-            <span>Explore Works (実績)</span>
+            <span>Explore Works</span>
             <span className="group-hover:translate-x-1 transition-transform">→</span>
           </button>
 
@@ -147,32 +141,21 @@ export const HomeSection: React.FC<HomeSectionProps> = ({
             }}
             className="px-6 py-3.5 rounded-full border border-white/20 bg-white/[0.04] text-white/80 hover:text-white hover:border-white/40 hover:bg-white/[0.08] font-mono-code text-xs tracking-wider uppercase font-medium transition-all"
           >
-            Get In Touch (連絡)
+            Get In Touch
           </button>
 
-          <a
-            id="hero-reference-link"
-            href="https://kuon-yagi-portfolio.netlify.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden md:flex items-center gap-1.5 px-4 py-3 rounded-full text-xs font-mono-code text-white/50 hover:text-cyan-400 hover:bg-white/[0.03] transition-colors"
-          >
-            <span>Original Netlify Site</span>
-            <ExternalLink className="w-3 h-3" />
-          </a>
         </div>
       </div>
 
       {/* Bottom Bar: Tech Stack tags & Scroll Down Cue */}
       <div
-        className={`flex flex-wrap items-end justify-between gap-4 pt-4 border-t border-white/10 transition-all duration-700 delay-600 ${
-          isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-        }`}
+        className={`flex flex-wrap items-end justify-between gap-4 pt-4 border-t border-white/10 transition-all duration-700 delay-600 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+          }`}
       >
         {/* Prompt-mentioned key technologies */}
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-[10px] font-mono-code text-white/40 uppercase mr-1">Core Tech:</span>
-          {['fullPage.js', 'Parallax.js', 'WOW.js', 'SVG Waves', 'Pug & SCSS', 'React + TS'].map((tech) => (
+          {['Python', 'Django', 'React', 'Prisma', 'PostgreSQL', 'TypeScript', 'Tailwind CSS'].map((tech) => (
             <span
               key={tech}
               className="text-[10px] font-mono-code px-2 py-0.5 rounded bg-white/[0.05] border border-white/10 text-white/70"
