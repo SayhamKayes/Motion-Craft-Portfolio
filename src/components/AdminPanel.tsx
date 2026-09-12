@@ -214,12 +214,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
     >
       <div
         id="admin-panel-container"
-        className="relative w-full max-w-5xl h-[90vh] rounded-2xl glass-panel border border-purple-500/40 flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200"
+        className="relative w-full max-w-5xl h-[90vh] rounded-2xl glass-panel border border-teal-500/40 flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200"
       >
         {/* Admin Header */}
         <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between bg-black/40">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-purple-600/30 border border-purple-500/50 flex items-center justify-center text-purple-400">
+            <div className="w-9 h-9 rounded-xl bg-teal-600/30 border border-teal-500/50 flex items-center justify-center text-teal-400">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
@@ -271,7 +271,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                 }}
                 className={`px-3.5 py-2 rounded-xl text-xs font-mono-code flex items-center gap-2 transition-all whitespace-nowrap ${
                   isActive
-                    ? 'bg-purple-600/30 text-white border border-purple-400/50 font-semibold shadow-[0_0_12px_rgba(168,85,247,0.25)]'
+                    ? 'bg-teal-600/30 text-white border border-teal-400/50 font-semibold shadow-[0_0_12px_rgba(20,184,166,0.25)]'
                     : 'text-white/60 hover:text-white hover:bg-white/[0.04]'
                 }`}
               >
@@ -281,7 +281,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   <span
                     className={`px-1.5 py-0.2 rounded-full text-[10px] ${
                       tab.id === 'messages' && tab.count > 0
-                        ? 'bg-pink-500 text-white font-bold animate-pulse'
+                        ? 'bg-emerald-500 text-white font-bold animate-pulse'
                         : 'bg-white/10 text-white/70'
                     }`}
                   >
@@ -328,7 +328,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     setTagsInput('React, TypeScript, fullPage.js');
                     setIsAddingProject(true);
                   }}
-                  className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-mono-code font-bold flex items-center gap-1.5 transition-all shadow-[0_0_12px_rgba(168,85,247,0.3)]"
+                  className="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs font-mono-code font-bold flex items-center gap-1.5 transition-all shadow-[0_0_12px_rgba(20,184,166,0.3)]"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>ADD NEW PROJECT</span>
@@ -339,10 +339,10 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
               {(isAddingProject || editingProject) && (
                 <form
                   onSubmit={handleSaveProject}
-                  className="p-5 rounded-2xl bg-purple-950/20 border border-purple-500/30 space-y-4 animate-in fade-in duration-150"
+                  className="p-5 rounded-2xl bg-teal-950/20 border border-teal-500/30 space-y-4 animate-in fade-in duration-150"
                 >
                   <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                    <span className="font-display font-bold text-sm text-purple-300">
+                    <span className="font-display font-bold text-sm text-teal-300">
                       {editingProject ? 'Edit Project' : 'Create New Project'}
                     </span>
                     <button
@@ -367,7 +367,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                         required
                         value={projectForm.title}
                         onChange={(e) => setProjectForm({ ...projectForm, title: e.target.value })}
-                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none"
+                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
                       />
                     </div>
 
@@ -379,7 +379,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                         type="text"
                         value={projectForm.subtitle}
                         onChange={(e) => setProjectForm({ ...projectForm, subtitle: e.target.value })}
-                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none"
+                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
                       />
                     </div>
 
@@ -390,7 +390,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                       <select
                         value={projectForm.category}
                         onChange={(e) => setProjectForm({ ...projectForm, category: e.target.value })}
-                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none"
+                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
                       >
                         <option value="Web Design">Web Design</option>
                         <option value="Creative Coding">Creative Coding</option>
@@ -407,7 +407,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                         type="text"
                         value={projectForm.year}
                         onChange={(e) => setProjectForm({ ...projectForm, year: e.target.value })}
-                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none"
+                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
                       />
                     </div>
 
@@ -419,7 +419,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                         type="text"
                         value={projectForm.client}
                         onChange={(e) => setProjectForm({ ...projectForm, client: e.target.value })}
-                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none"
+                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
                       />
                     </div>
 
@@ -431,7 +431,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                         type="text"
                         value={projectForm.role}
                         onChange={(e) => setProjectForm({ ...projectForm, role: e.target.value })}
-                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none"
+                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
                       />
                     </div>
 
@@ -443,7 +443,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                         type="url"
                         value={projectForm.image}
                         onChange={(e) => setProjectForm({ ...projectForm, image: e.target.value })}
-                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none"
+                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
                       />
                     </div>
 
@@ -456,7 +456,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                         value={tagsInput}
                         onChange={(e) => setTagsInput(e.target.value)}
                         placeholder="e.g. fullPage.js, SVG Animation, Pug, React"
-                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none"
+                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
                       />
                     </div>
 
@@ -468,7 +468,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                         rows={3}
                         value={projectForm.description}
                         onChange={(e) => setProjectForm({ ...projectForm, description: e.target.value })}
-                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none resize-none"
+                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none resize-none"
                       />
                     </div>
                   </div>
@@ -486,7 +486,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     </button>
                     <button
                       type="submit"
-                      className="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-mono-code font-bold flex items-center gap-1.5"
+                      className="px-5 py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs font-mono-code font-bold flex items-center gap-1.5"
                     >
                       <Save className="w-3.5 h-3.5" />
                       <span>{editingProject ? 'Update Project' : 'Save Project'}</span>
@@ -589,7 +589,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     });
                     setIsAddingSkill(true);
                   }}
-                  className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-mono-code font-bold flex items-center gap-1.5 transition-all"
+                  className="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs font-mono-code font-bold flex items-center gap-1.5 transition-all"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>ADD NEW SKILL</span>
@@ -599,10 +599,10 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
               {(isAddingSkill || editingSkill) && (
                 <form
                   onSubmit={handleSaveSkill}
-                  className="p-5 rounded-2xl bg-purple-950/20 border border-purple-500/30 space-y-4"
+                  className="p-5 rounded-2xl bg-teal-950/20 border border-teal-500/30 space-y-4"
                 >
                   <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                    <span className="font-display font-bold text-sm text-purple-300">
+                    <span className="font-display font-bold text-sm text-teal-300">
                       {editingSkill ? 'Edit Skill' : 'Add New Skill'}
                     </span>
                     <button
@@ -628,7 +628,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                         value={skillForm.name}
                         onChange={(e) => setSkillForm({ ...skillForm, name: e.target.value })}
                         placeholder="e.g. fullPage.js"
-                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none"
+                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
                       />
                     </div>
 
@@ -644,7 +644,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                             category: e.target.value as Skill['category'],
                           })
                         }
-                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none"
+                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
                       >
                         <option value="Core Front-End">Core Front-End</option>
                         <option value="Libraries & Motion">Libraries &amp; Motion</option>
@@ -679,7 +679,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                         value={skillForm.iconTag}
                         onChange={(e) => setSkillForm({ ...skillForm, iconTag: e.target.value })}
                         placeholder="e.g. SASS"
-                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none uppercase"
+                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none uppercase"
                       />
                     </div>
 
@@ -693,7 +693,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                         onChange={(e) =>
                           setSkillForm({ ...skillForm, description: e.target.value })
                         }
-                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none resize-none"
+                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none resize-none"
                       />
                     </div>
                   </div>
@@ -711,7 +711,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     </button>
                     <button
                       type="submit"
-                      className="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-mono-code font-bold flex items-center gap-1.5"
+                      className="px-5 py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs font-mono-code font-bold flex items-center gap-1.5"
                     >
                       <Save className="w-3.5 h-3.5" />
                       <span>{editingSkill ? 'Update Skill' : 'Save Skill'}</span>
@@ -796,7 +796,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     type="text"
                     value={profileForm.name}
                     onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none"
+                    className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
                   />
                 </div>
 
@@ -808,7 +808,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     type="text"
                     value={profileForm.kanjiName}
                     onChange={(e) => setProfileForm({ ...profileForm, kanjiName: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none font-japanese"
+                    className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none font-japanese"
                   />
                 </div>
 
@@ -820,7 +820,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     type="text"
                     value={profileForm.title}
                     onChange={(e) => setProfileForm({ ...profileForm, title: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none"
+                    className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
                   />
                 </div>
 
@@ -832,7 +832,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     type="text"
                     value={profileForm.location}
                     onChange={(e) => setProfileForm({ ...profileForm, location: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none"
+                    className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
                   />
                 </div>
 
@@ -844,7 +844,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     type="email"
                     value={profileForm.email}
                     onChange={(e) => setProfileForm({ ...profileForm, email: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none"
+                    className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
                   />
                 </div>
 
@@ -856,7 +856,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     type="text"
                     value={profileForm.availability}
                     onChange={(e) => setProfileForm({ ...profileForm, availability: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none"
+                    className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
                   />
                 </div>
 
@@ -868,7 +868,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     type="text"
                     value={profileForm.statement}
                     onChange={(e) => setProfileForm({ ...profileForm, statement: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none"
+                    className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
                   />
                 </div>
 
@@ -880,7 +880,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     rows={4}
                     value={profileForm.bio}
                     onChange={(e) => setProfileForm({ ...profileForm, bio: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-purple-400 focus:outline-none resize-none"
+                    className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none resize-none"
                   />
                 </div>
               </div>
@@ -888,7 +888,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
               <button
                 type="submit"
                 disabled={profileSaving}
-                className="px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-mono-code text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all shadow-[0_0_15px_rgba(168,85,247,0.3)] disabled:opacity-50"
+                className="px-6 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-mono-code text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all shadow-[0_0_15px_rgba(20,184,166,0.3)] disabled:opacity-50"
               >
                 <Save className="w-4 h-4" />
                 <span>{profileSaving ? 'Saving...' : 'Save Profile Changes'}</span>
@@ -922,7 +922,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                       className={`p-4 rounded-xl border transition-all ${
                         msg.read
                           ? 'glass-panel-light border-white/5 opacity-70'
-                          : 'bg-purple-950/20 border-purple-500/40 shadow-md'
+                          : 'bg-teal-950/20 border-teal-500/40 shadow-md'
                       }`}
                     >
                       <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
@@ -930,7 +930,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                           <span className="font-bold text-white text-sm">{msg.name}</span>
                           <span className="text-xs text-cyan-400 font-mono-code">&lt;{msg.email}&gt;</span>
                           {!msg.read && (
-                            <span className="px-1.5 py-0.5 rounded bg-pink-500 text-[9px] font-mono-code text-white">
+                            <span className="px-1.5 py-0.5 rounded bg-emerald-500 text-[9px] font-mono-code text-white">
                               NEW
                             </span>
                           )}
@@ -964,7 +964,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                       <div className="mt-3 pt-2 border-t border-white/5 flex justify-end">
                         <a
                           href={`mailto:${msg.email}?subject=Re: ${encodeURIComponent(msg.subject)}`}
-                          className="text-[11px] font-mono-code text-purple-400 hover:text-purple-300 flex items-center gap-1"
+                          className="text-[11px] font-mono-code text-teal-400 hover:text-teal-300 flex items-center gap-1"
                         >
                           <span>Reply via Email</span>
                           <ExternalLink className="w-3 h-3" />
