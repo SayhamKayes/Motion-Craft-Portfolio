@@ -273,7 +273,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                         required
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        placeholder="e.g. Kenji Tanaka"
+                        placeholder="e.g. Sayham Kayes"
                         className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/10 focus:border-cyan-400 focus:outline-none text-xs sm:text-sm text-white placeholder-white/20 transition-colors"
                       />
                     </div>
@@ -291,7 +291,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                         required
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        placeholder="e.g. kenji@domain.com"
+                        placeholder="e.g. contact@sayhamkayes.com"
                         className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/10 focus:border-cyan-400 focus:outline-none text-xs sm:text-sm text-white placeholder-white/20 transition-colors"
                       />
                     </div>
@@ -309,7 +309,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                       type="text"
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      placeholder="e.g. New Web Design Project Collaboration"
+                      placeholder="e.g. Web Application or Mobile Application Project Collaboration"
                       className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/10 focus:border-cyan-400 focus:outline-none text-xs sm:text-sm text-white placeholder-white/20 transition-colors"
                     />
                   </div>
@@ -327,7 +327,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                       rows={4}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Tell Kuon about your project timeline, vision, and scope..."
+                      placeholder="Tell Sayham about your project timeline, vision, and scope..."
                       className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/10 focus:border-cyan-400 focus:outline-none text-xs sm:text-sm text-white placeholder-white/20 transition-colors resize-none"
                     />
                   </div>
