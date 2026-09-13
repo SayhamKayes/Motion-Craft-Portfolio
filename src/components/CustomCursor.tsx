@@ -44,9 +44,15 @@ export const CustomCursor: React.FC = () => {
     let currentY = -100;
 
     const renderLoop = () => {
-      currentX += (targetX - currentX) * 0.18;
-      currentY += (targetY - currentY) * 0.18;
-      setTrailingPos({ x: currentX, y: currentY });
+      const diffX = targetX - currentX;
+      const diffY = targetY - currentY;
+      
+      if (Math.abs(diffX) > 0.1 || Math.abs(diffY) > 0.1) {
+        currentX += diffX * 0.5;
+        currentY += diffY * 0.5;
+        setTrailingPos({ x: currentX, y: currentY });
+      }
+      
       animationFrameId = requestAnimationFrame(renderLoop);
     };
 
