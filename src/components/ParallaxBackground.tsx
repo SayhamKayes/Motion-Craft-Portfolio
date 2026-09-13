@@ -30,9 +30,13 @@ export const ParallaxBackground: React.FC<ParallaxBackgroundProps> = ({
     let curY = 0;
 
     const tick = () => {
-      curX += (targetX - curX) * 0.08;
-      curY += (targetY - curY) * 0.08;
-      setLerpPos({ x: curX, y: curY });
+      const diffX = targetX - curX;
+      const diffY = targetY - curY;
+      if (Math.abs(diffX) > 0.001 || Math.abs(diffY) > 0.001) {
+        curX += diffX * 0.08;
+        curY += diffY * 0.08;
+        setLerpPos({ x: curX, y: curY });
+      }
       animationFrameId = requestAnimationFrame(tick);
     };
 
@@ -128,7 +132,7 @@ export const ParallaxBackground: React.FC<ParallaxBackgroundProps> = ({
         }}
       >
         <svg
-          className="absolute bottom-0 left-0 w-[150%] h-[75%] -translate-x-[15%] translate-y-[10%] opacity-40 mix-blend-screen animate-float-slow"
+          className="absolute bottom-0 left-0 w-[150%] h-[75%] -translate-x-[15%] translate-y-[10%] opacity-20 animate-float-slow"
           viewBox="0 0 1440 800"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -152,7 +156,7 @@ export const ParallaxBackground: React.FC<ParallaxBackgroundProps> = ({
         </svg>
 
         <svg
-          className="absolute bottom-0 right-0 w-[160%] h-[65%] -translate-x-[5%] translate-y-[20%] opacity-35 mix-blend-screen animate-float-reverse"
+          className="absolute bottom-0 right-0 w-[160%] h-[65%] -translate-x-[5%] translate-y-[20%] opacity-20 animate-float-reverse"
           viewBox="0 0 1440 800"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -203,11 +207,11 @@ export const ParallaxBackground: React.FC<ParallaxBackgroundProps> = ({
 
       {/* Floating Solid Color Blobs (Soft Glow) */}
       <div
-        className="absolute top-1/4 left-1/3 w-72 h-72 rounded-full bg-violet-600/15 blur-3xl will-change-transform animate-pulse-glow"
+        className="absolute top-1/4 left-1/3 w-72 h-72 rounded-full bg-violet-600/15 blur-2xl will-change-transform"
         style={{ transform: `translate3d(${mx * -20}px, ${my * -20}px, 0)` }}
       />
       <div
-        className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-cyan-500/15 blur-3xl will-change-transform animate-pulse-glow"
+        className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-cyan-500/15 blur-2xl will-change-transform"
         style={{ transform: `translate3d(${mx * 28}px, ${my * 28}px, 0)` }}
       />
       <div
