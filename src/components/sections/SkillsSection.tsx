@@ -50,7 +50,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({
         </div>
 
         {/* Filter Pills */}
-        <div className="flex flex-wrap items-center gap-1.5 bg-white/[0.04] p-1 rounded-full border border-white/10 self-start sm:self-auto">
+        {/* <div className="flex flex-wrap items-center gap-1.5 bg-white/[0.04] p-1 rounded-full border border-white/10 self-start sm:self-auto">
           {categories.map((cat) => {
             const isCatActive = selectedCategory === cat;
             return (
@@ -70,94 +70,100 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({
               </button>
             );
           })}
-        </div>
+        </div> */}
       </div>
 
-      {/* Skills Grid */}
+      {/* Skills Marquee Rows */}
       <div
-        id="skills-grid-container"
-        className="my-auto py-2 overflow-y-auto max-h-[66vh] pr-1.5 scrollbar-thin"
+        id="skills-marquee-container"
+        className={`my-auto py-10 flex flex-col gap-5 sm:gap-6 overflow-hidden marquee-container w-full transition-all duration-700 delay-300 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+        style={{ WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)', maskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)' }}
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredSkills.map((skill, idx) => {
-            const isHighlighted =
-              skill.name.includes('fullPage') ||
-              skill.name.includes('Parallax') ||
-              skill.name.includes('WOW') ||
-              skill.name.includes('SVG') ||
-              skill.name.includes('Pug');
+        {(() => {
+          const row1 = filteredSkills.filter(s => s.sliderRow === 'top' || !s.sliderRow);
+          const row2 = filteredSkills.filter(s => s.sliderRow === 'middle');
+          const row3 = filteredSkills.filter(s => s.sliderRow === 'bottom');
 
-            return (
-              <div
-                key={skill.id}
-                id={`skill-card-${skill.id}`}
-                onClick={() => {
-                  playSound('click', settings.soundEnabled);
-                  setActiveSkillDetail(skill);
+          // Sort each row by order just to be safe, though filteredSkills is already sorted
+          row1.sort((a, b) => (a.order || 0) - (b.order || 0));
+          row2.sort((a, b) => (a.order || 0) - (b.order || 0));
+          row3.sort((a, b) => (a.order || 0) - (b.order || 0));
+          // Ensure array is large enough and duplicated for seamless -50% translation
+          const multiplyArray = (arr: Skill[], minItems: number = 10) => {
+            if (arr.length === 0) return [];
+            let result: Skill[] = [...arr];
+            while (result.length < minItems) {
+              result = [...result, ...arr];
+            }
+            return [...result, ...result];
+          };
+
+          const arr1 = multiplyArray(row1);
+          const arr2 = multiplyArray(row2);
+          const arr3 = multiplyArray(row3);
+
+          const renderCard = (skill: Skill, i: number) => (
+            <div
+              key={`${skill.id}-${i}`}
+              onClick={() => {
+                playSound('click', settings.soundEnabled);
+                setActiveSkillDetail(skill);
+              }}
+              className="group relative flex flex-col items-center justify-center w-[150px] h-[100px] mx-3 rounded-2xl bg-gradient-to-br from-white/[0.08] to-transparent backdrop-blur-sm border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:bg-gradient-to-br hover:from-white/[0.12] hover:to-white/[0.02] hover:-translate-y-1 hover:border-cyan-400/70 transition-all duration-300 cursor-pointer hover:shadow-[0_8px_32px_rgba(34,211,238,0.4),inset_0_1px_2px_rgba(255,255,255,0.4)] shrink-0 overflow-hidden will-change-transform"
+            >
+              {/* Glossy top highlight overlay */}
+              <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/[0.2] to-transparent pointer-events-none opacity-80" />
+
+              <div className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-blue-600 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-b-2xl" />
+              
+              <img 
+                src={skill.customIconUrl || `https://cdn.simpleicons.org/${skill.iconTag || 'javascript'}/22d3ee`} 
+                alt={skill.name}
+                width={32}
+                height={32}
+                loading="lazy"
+                decoding="async"
+                className="w-8 h-8 object-contain mb-2 group-hover:scale-110 transition-transform duration-300 relative z-10 will-change-transform"
+                onError={(e) => {
+                  // Fallback if icon doesn't exist
+                  if (!skill.customIconUrl) {
+                    (e.target as HTMLImageElement).src = `https://cdn.simpleicons.org/code/22d3ee`;
+                  }
                 }}
-                style={{
-                  transitionDelay: `${idx * 60 + 100}ms`,
-                }}
-                className={`group relative p-4 rounded-xl glass-panel border transition-all duration-500 cursor-pointer hover:-translate-y-1 hover:border-cyan-400/50 ${isHighlighted
-                  ? 'border-cyan-500/30 bg-cyan-950/20'
-                  : 'border-white/10 hover:bg-white/[0.06]'
-                  } ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-              >
-                {/* Top Info */}
-                <div className="flex items-start justify-between gap-3 mb-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 border border-white/15 flex items-center justify-center font-mono-code text-[11px] font-bold text-cyan-300">
-                      {skill.iconTag}
-                    </span>
-                    <div>
-                      <h4 className="font-display font-bold text-sm text-white group-hover:text-cyan-300 transition-colors">
-                        {skill.name}
-                      </h4>
-                      <span className="text-[10px] font-mono-code text-white/40 uppercase">
-                        {skill.category}
-                      </span>
-                    </div>
-                  </div>
+              />
+              <span className="text-xs font-mono-code text-white/70 group-hover:text-white transition-colors duration-300 text-center px-2 truncate w-full relative z-10">
+                {skill.name}
+              </span>
+            </div>
+          );
 
-                  <div className="flex items-baseline gap-1 font-mono-code text-xs font-bold text-cyan-400">
-                    <span>{skill.level}%</span>
-                  </div>
+          return (
+            <>
+              {arr1.length > 0 && (
+                <div className="flex animate-marquee-left w-max will-change-transform">
+                  {arr1.map(renderCard)}
                 </div>
-
-                {/* Progress Bar with Staggered Fill */}
-                <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden my-2.5">
-                  <div
-                    className="h-full bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-400 rounded-full transition-all duration-1000 ease-out"
-                    style={{
-                      width: isActive ? `${skill.level}%` : '0%',
-                      transitionDelay: `${idx * 80 + 200}ms`,
-                    }}
-                  />
+              )}
+              {arr2.length > 0 && (
+                <div className="flex animate-marquee-right w-max will-change-transform">
+                  {arr2.map(renderCard)}
                 </div>
-
-                {/* Description */}
-                <p className="text-[11px] text-white/60 font-body leading-relaxed line-clamp-2">
-                  {skill.description}
-                </p>
-
-                {/* Highlight Badge */}
-                {isHighlighted && (
-                  <div className="mt-2.5 flex items-center gap-1 text-[9px] font-mono-code text-emerald-400">
-                    <Zap className="w-3 h-3" />
-                    <span>Sayham Kayes Core Library</span>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
+              )}
+              {arr3.length > 0 && (
+                <div className="flex animate-marquee-left w-max will-change-transform">
+                  {arr3.map(renderCard)}
+                </div>
+              )}
+            </>
+          );
+        })()}
       </div>
 
       {/* Skill Detail Modal */}
       {activeSkillDetail && (
         <div
           id="skill-detail-modal"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4"
+          className="absolute inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4"
           onClick={() => setActiveSkillDetail(null)}
         >
           <div
@@ -166,8 +172,17 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({
           >
             <div className="flex items-start justify-between gap-4 mb-4">
               <div className="flex items-center gap-3">
-                <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center font-mono-code text-sm font-black text-white shadow-[0_0_15px_rgba(34,211,238,0.4)]">
-                  {activeSkillDetail.iconTag}
+                <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center shadow-[0_0_15px_rgba(34,211,238,0.4)]">
+                  <img 
+                    src={activeSkillDetail.customIconUrl || `https://cdn.simpleicons.org/${activeSkillDetail.iconTag || 'javascript'}/white`} 
+                    alt={activeSkillDetail.name}
+                    className="w-5 h-5 object-contain"
+                    onError={(e) => {
+                      if (!activeSkillDetail.customIconUrl) {
+                        (e.target as HTMLImageElement).src = `https://cdn.simpleicons.org/code/white`;
+                      }
+                    }}
+                  />
                 </span>
                 <div>
                   <h3 className="font-display font-black text-xl text-white">
