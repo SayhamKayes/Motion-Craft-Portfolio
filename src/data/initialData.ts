@@ -122,8 +122,9 @@ export const initialSkills: Skill[] = [
     category: 'Core Front-End',
     level: 95,
     description: 'Bootstrap, CSS3, HTML5, JavaScript(ES6+), React.js, Tailwind CSS, TypeScript',
-    iconTag: 'FRONT',
+    iconTag: 'html5',
     order: 1,
+    sliderRow: 'top',
   },
   {
     id: 'skill-2',
@@ -131,8 +132,9 @@ export const initialSkills: Skill[] = [
     category: 'Core Front-End',
     level: 90,
     description: 'Django, Fast APIs, Node.js, Prisma, Python, REST APIs, SQL',
-    iconTag: 'BACK',
+    iconTag: 'nodedotjs',
     order: 2,
+    sliderRow: 'middle',
   },
   {
     id: 'skill-3',
@@ -140,8 +142,9 @@ export const initialSkills: Skill[] = [
     category: 'Tools & Design',
     level: 85,
     description: 'MySQL, PostgreSQL, SQLite',
-    iconTag: 'DB',
+    iconTag: 'mysql',
     order: 3,
+    sliderRow: 'bottom',
   },
   {
     id: 'skill-4',
@@ -149,8 +152,9 @@ export const initialSkills: Skill[] = [
     category: 'Graphics & 3D',
     level: 80,
     description: 'CNN, NumPy, Pandas, PyTorch, Scikit-Learn, TensorFlow',
-    iconTag: 'AI',
+    iconTag: 'tensorflow',
     order: 4,
+    sliderRow: 'top',
   },
   {
     id: 'skill-5',
@@ -158,8 +162,9 @@ export const initialSkills: Skill[] = [
     category: 'Tools & Design',
     level: 85,
     description: 'Git, GitHub, PythonAnywhere, Render, Streamlit, Vercel, VS Code, WordPress',
-    iconTag: 'DEV',
+    iconTag: 'git',
     order: 5,
+    sliderRow: 'middle',
   },
   {
     id: 'skill-6',
@@ -167,8 +172,9 @@ export const initialSkills: Skill[] = [
     category: 'Libraries & Motion',
     level: 95,
     description: 'Agile/Scrum, Client Communication, Problem Solving, Remote Collaboration',
-    iconTag: 'SOFT',
+    iconTag: 'trello',
     order: 6,
+    sliderRow: 'bottom',
   }
 ];
 
