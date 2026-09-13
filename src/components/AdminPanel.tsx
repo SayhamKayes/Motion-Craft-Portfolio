@@ -18,6 +18,8 @@ import {
   ShieldCheck,
   LogOut,
   AlertTriangle,
+  ArrowUp,
+  ArrowDown,
 } from 'lucide-react';
 import { Profile, Project, Skill, SiteSettings, ContactMessage } from '../types';
 import {
@@ -93,6 +95,8 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
     description: '',
     iconTag: 'DEV',
     order: skills.length + 1,
+    sliderRow: 'top',
+    customIconUrl: '',
   });
 
   // Settings State
@@ -180,6 +184,26 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
       console.error(err);
     }
   };
+
+  const handleMoveSkill = async (index: number, direction: 'up' | 'down') => {
+    if (direction === 'up' && index === 0) return;
+    if (direction === 'down' && index === skills.length - 1) return;
+
+    const currentSkill = skills[index];
+    const targetSkill = skills[direction === 'up' ? index - 1 : index + 1];
+
+    try {
+      // Optimistic or just directly update the DB (since we are subscribed to onSnapshot)
+      await updateSkill(currentSkill.id, { order: targetSkill.order });
+      await updateSkill(targetSkill.id, { order: currentSkill.order });
+      playSound('click', settings.soundEnabled);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Get unique categories for datalist
+  const uniqueCategories = Array.from(new Set(skills.map(s => s.category)));
 
   const handleSettingsUpdate = async (newSettings: Partial<SiteSettings>) => {
     const merged = { ...settingsForm, ...newSettings };
@@ -585,7 +609,9 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                       level: 90,
                       description: '',
                       iconTag: 'TECH',
-                      order: skills.length + 1,
+                      order: skills.length > 0 ? Math.max(...skills.map(s => s.order)) + 1 : 1,
+                      sliderRow: 'top',
+                      customIconUrl: '',
                     });
                     setIsAddingSkill(true);
                   }}
@@ -626,8 +652,19 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                         type="text"
                         required
                         value={skillForm.name}
-                        onChange={(e) => setSkillForm({ ...skillForm, name: e.target.value })}
-                        placeholder="e.g. fullPage.js"
+                        onChange={(e) => {
+                          const newName = e.target.value;
+                          setSkillForm(prev => {
+                            // If iconTag is empty, try to auto-generate a basic slug
+                            const autoSlug = newName.toLowerCase().replace(/[^a-z0-9]/g, '');
+                            return {
+                              ...prev,
+                              name: newName,
+                              iconTag: prev.iconTag || autoSlug
+                            };
+                          });
+                        }}
+                        placeholder="e.g. React.js"
                         className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
                       />
                     </div>
@@ -636,21 +673,44 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                       <label className="block text-[11px] font-mono-code text-white/60 mb-1">
                         CATEGORY
                       </label>
-                      <select
+                      <input
+                        list="skill-categories"
                         value={skillForm.category}
                         onChange={(e) =>
                           setSkillForm({
                             ...skillForm,
-                            category: e.target.value as Skill['category'],
+                            category: e.target.value,
                           })
                         }
+                        placeholder="Select or type new..."
                         className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
-                      >
-                        <option value="Core Front-End">Core Front-End</option>
-                        <option value="Libraries & Motion">Libraries &amp; Motion</option>
-                        <option value="Graphics & 3D">Graphics &amp; 3D</option>
-                        <option value="Tools & Design">Tools &amp; Design</option>
-                      </select>
+                      />
+                      <datalist id="skill-categories">
+                        {uniqueCategories.map(cat => (
+                          <option key={cat} value={cat} />
+                        ))}
+                      </datalist>
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label className="block text-[11px] font-mono-code text-white/60 mb-2">
+                        SLIDER ROW OPTION
+                      </label>
+                      <div className="flex items-center gap-4">
+                        {(['top', 'middle', 'bottom'] as const).map(row => (
+                          <label key={row} className="flex items-center gap-2 cursor-pointer">
+                            <input
+                              type="radio"
+                              name="sliderRow"
+                              value={row}
+                              checked={skillForm.sliderRow === row}
+                              onChange={() => setSkillForm({ ...skillForm, sliderRow: row })}
+                              className="w-3.5 h-3.5 accent-teal-400"
+                            />
+                            <span className="text-xs text-white capitalize">Slider {row}</span>
+                          </label>
+                        ))}
+                      </div>
                     </div>
 
                     <div>
@@ -670,16 +730,33 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono-code text-white/60 mb-1">
-                        SHORT ICON TAG (3-5 chars)
-                      </label>
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="block text-[11px] font-mono-code text-white/60">
+                          ICON SLUG (SimpleIcons)
+                        </label>
+                        <a href="https://simpleicons.org" target="_blank" rel="noreferrer" className="text-[9px] text-cyan-400 hover:underline">
+                          Find Icons
+                        </a>
+                      </div>
                       <input
                         type="text"
-                        maxLength={5}
                         value={skillForm.iconTag}
-                        onChange={(e) => setSkillForm({ ...skillForm, iconTag: e.target.value })}
-                        placeholder="e.g. SASS"
-                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none uppercase"
+                        onChange={(e) => setSkillForm({ ...skillForm, iconTag: e.target.value.toLowerCase() })}
+                        placeholder="e.g. react"
+                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none lowercase"
+                      />
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label className="block text-[11px] font-mono-code text-white/60 mb-1">
+                        CUSTOM ICON URL (Optional - overrides slug above)
+                      </label>
+                      <input
+                        type="url"
+                        value={skillForm.customIconUrl || ''}
+                        onChange={(e) => setSkillForm({ ...skillForm, customIconUrl: e.target.value })}
+                        placeholder="e.g. https://example.com/icon.svg"
+                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
                       />
                     </div>
 
@@ -747,6 +824,8 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                             description: s.description,
                             iconTag: s.iconTag,
                             order: s.order,
+                            sliderRow: s.sliderRow || 'top',
+                            customIconUrl: s.customIconUrl || '',
                           });
                           setIsAddingSkill(false);
                         }}
@@ -760,6 +839,22 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                       >
                         <Trash2 className="w-3 h-3" />
                       </button>
+                      <div className="flex flex-col ml-2 gap-0.5">
+                        <button
+                          onClick={() => handleMoveSkill(skills.indexOf(s), 'up')}
+                          disabled={skills.indexOf(s) === 0}
+                          className="p-0.5 rounded bg-white/5 hover:bg-white/15 text-white/50 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
+                        >
+                          <ArrowUp className="w-3 h-3" />
+                        </button>
+                        <button
+                          onClick={() => handleMoveSkill(skills.indexOf(s), 'down')}
+                          disabled={skills.indexOf(s) === skills.length - 1}
+                          className="p-0.5 rounded bg-white/5 hover:bg-white/15 text-white/50 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
+                        >
+                          <ArrowDown className="w-3 h-3" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
