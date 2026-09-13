@@ -135,14 +135,14 @@ export const ParallaxBackground: React.FC<ParallaxBackgroundProps> = ({
         >
           <defs>
             <linearGradient id="waveGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#ec4899" stopOpacity="0.8" />
-              <stop offset="45%" stopColor="#8b5cf6" stopOpacity="0.7" />
-              <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.6" />
+              <stop offset="0%" stopColor="#10b981" stopOpacity="0.8" />
+              <stop offset="45%" stopColor="#14b8a6" stopOpacity="0.7" />
+              <stop offset="100%" stopColor="#22d3ee" stopOpacity="0.6" />
             </linearGradient>
             <linearGradient id="waveGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.6" />
-              <stop offset="50%" stopColor="#ec4899" stopOpacity="0.5" />
-              <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.7" />
+              <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.6" />
+              <stop offset="50%" stopColor="#10b981" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0.7" />
             </linearGradient>
           </defs>
           <path
