@@ -17,11 +17,13 @@ export interface Project {
 export interface Skill {
   id: string;
   name: string;
-  category: 'Core Front-End' | 'Libraries & Motion' | 'Graphics & 3D' | 'Tools & Design';
+  category: string;
   level: number; // 0 to 100
   description: string;
   iconTag: string;
   order: number;
+  sliderRow?: 'top' | 'middle' | 'bottom';
+  customIconUrl?: string;
 }
 
 export interface Profile {
