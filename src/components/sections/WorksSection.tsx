@@ -73,7 +73,7 @@ export const WorksSection: React.FC<WorksSectionProps> = ({
       {/* Projects Grid Container (No Scroll) */}
       <div
         id="works-grid-container"
-        className="mt-8 py-3 pr-1.5 flex flex-col items-center"
+        className="mt-8 py-3 pr-1.5 flex flex-col items-center overflow-y-auto max-h-[68vh] scrollbar-thin"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {filteredProjects.slice(0, 3).map((project, idx) => {
