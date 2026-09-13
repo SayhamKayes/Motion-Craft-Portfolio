@@ -131,8 +131,23 @@ export default function App() {
 
     const handleTouchEnd = (e: TouchEvent) => {
       if (isScrollingRef.current) return;
+      
+      const target = e.target as HTMLElement | null;
+      const scrollable = target?.closest('.overflow-y-auto') as HTMLElement | null;
       const touchEndY = e.changedTouches[0].clientY;
       const diffY = touchStartYRef.current - touchEndY;
+
+      if (scrollable && scrollable.scrollHeight > scrollable.clientHeight) {
+        const atTop = scrollable.scrollTop <= 2 && diffY < 0;
+        const atBottom =
+          scrollable.scrollTop + scrollable.clientHeight >= scrollable.scrollHeight - 2 &&
+          diffY > 0;
+
+        if (!atTop && !atBottom) {
+          // Allow normal scroll inside the container
+          return;
+        }
+      }
 
       if (Math.abs(diffY) > 50) {
         if (diffY > 0 && activeSection < totalSections - 1) {
