@@ -152,7 +152,7 @@ export const Navigation: React.FC<NavigationProps> = ({
         >
           <div className="flex items-center gap-2 mb-8 text-cyan-400 font-mono-code text-xs tracking-widest uppercase">
             <Sparkles className="w-4 h-4" />
-            <span>Navigation Menu / ナビゲーション</span>
+            <span>Navigation Menu</span>
           </div>
 
           <div className="space-y-4">
@@ -176,7 +176,7 @@ export const Navigation: React.FC<NavigationProps> = ({
           </div>
 
           <div className="mt-12 pt-6 border-t border-white/10 flex items-center justify-between text-xs text-white/50 font-mono-code">
-            <span>TOKYO &amp; KOBE, JAPAN</span>
+            <span>Dhaka, Bangladesh</span>
             <button
               onClick={() => {
                 onOpenAdmin();
