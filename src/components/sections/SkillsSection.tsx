@@ -109,15 +109,15 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({
                 playSound('click', settings.soundEnabled);
                 setActiveSkillDetail(skill);
               }}
-              className="group relative flex flex-col items-center justify-center w-[150px] h-[100px] mx-3 rounded-2xl bg-gradient-to-br from-white/[0.08] to-transparent backdrop-blur-sm border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:bg-gradient-to-br hover:from-white/[0.12] hover:to-white/[0.02] hover:-translate-y-1 hover:border-cyan-400/70 transition-all duration-300 cursor-pointer hover:shadow-[0_8px_32px_rgba(34,211,238,0.4),inset_0_1px_2px_rgba(255,255,255,0.4)] shrink-0 overflow-hidden will-change-transform"
+              className="group relative flex flex-col items-center justify-center w-[150px] h-[100px] mx-3 rounded-2xl bg-gradient-to-br from-white/[0.08] to-transparent border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:bg-gradient-to-br hover:from-white/[0.12] hover:to-white/[0.02] hover:-translate-y-1 hover:border-cyan-400/70 transition-all duration-300 cursor-pointer hover:shadow-[0_8px_32px_rgba(34,211,238,0.4),inset_0_1px_2px_rgba(255,255,255,0.4)] shrink-0 overflow-hidden will-change-transform"
             >
               {/* Glossy top highlight overlay */}
               <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/[0.2] to-transparent pointer-events-none opacity-80" />
 
               <div className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-blue-600 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-b-2xl" />
-              
-              <img 
-                src={skill.customIconUrl || `https://cdn.simpleicons.org/${skill.iconTag || 'javascript'}/22d3ee`} 
+
+              <img
+                src={skill.customIconUrl || `https://cdn.simpleicons.org/${skill.iconTag || 'javascript'}/22d3ee`}
                 alt={skill.name}
                 width={32}
                 height={32}
@@ -173,8 +173,8 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({
             <div className="flex items-start justify-between gap-4 mb-4">
               <div className="flex items-center gap-3">
                 <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center shadow-[0_0_15px_rgba(34,211,238,0.4)]">
-                  <img 
-                    src={activeSkillDetail.customIconUrl || `https://cdn.simpleicons.org/${activeSkillDetail.iconTag || 'javascript'}/white`} 
+                  <img
+                    src={activeSkillDetail.customIconUrl || `https://cdn.simpleicons.org/${activeSkillDetail.iconTag || 'javascript'}/white`}
                     alt={activeSkillDetail.name}
                     className="w-5 h-5 object-contain"
                     onError={(e) => {
