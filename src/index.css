@@ -145,3 +145,26 @@
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
+
+@keyframes marqueeLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marqueeRight {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.animate-marquee-left {
+  animation: marqueeLeft 40s linear infinite;
+}
+
+.animate-marquee-right {
+  animation: marqueeRight 40s linear infinite;
+}
+
+.animate-marquee-left:hover,
+.animate-marquee-right:hover {
+  animation-play-state: paused;
+}
