@@ -29,7 +29,7 @@ export const WorksSection: React.FC<WorksSectionProps> = ({
   return (
     <section
       id="section-works"
-      className="relative w-full h-screen flex flex-col px-6 sm:px-16 pt-30 pb-8 overflow-hidden select-none"
+      className="relative w-full h-screen flex flex-col px-6 sm:px-16 pt-24 pb-8 overflow-hidden select-none"
     >
       {/* Header & Filter Bar */}
       <div
