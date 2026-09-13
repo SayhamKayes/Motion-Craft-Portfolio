@@ -67,7 +67,7 @@ export const Navigation: React.FC<NavigationProps> = ({
         </button>
 
         {/* Desktop Nav Items */}
-        <nav id="desktop-nav" className="hidden lg:flex items-center gap-1 bg-white/[0.04] backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+        <nav id="desktop-nav" className="hidden lg:flex items-center gap-1 bg-[#1a1f2e]/90 px-3 py-1.5 rounded-full border border-white/10">
           {sections.map((sec, idx) => {
             const isActive = activeSection === idx;
             return (
@@ -148,7 +148,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       {mobileMenuOpen && (
         <div
           id="mobile-nav-overlay"
-          className="fixed inset-0 z-30 bg-[#0a0c16]/95 backdrop-blur-xl lg:hidden flex flex-col justify-center px-8 sm:px-16"
+          className="fixed inset-0 z-30 bg-[#0a0c16]/98 lg:hidden flex flex-col justify-center px-8 sm:px-16"
         >
           <div className="flex items-center gap-2 mb-8 text-cyan-400 font-mono-code text-xs tracking-widest uppercase">
             <Sparkles className="w-4 h-4" />
