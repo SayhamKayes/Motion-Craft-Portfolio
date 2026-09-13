@@ -58,13 +58,6 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0b0c12] via-transparent to-transparent opacity-80" />
 
-                {/* Floating  Seal */}
-                {/* {settings.showJapaneseKanji && (
-                  <div className="absolute top-3 right-3 w-20 h-15 rounded-lg bg-light-500/20 backdrop-blur-md border border-emerald-500/40 flex items-center text-center justify-center font-japanese font-black text-emerald-300 text-base shadow-[0_0_15px_rgba(16,185,129,0.3)]">
-                    {profile.name}
-                  </div>
-                )} */}
-
                 {/* Location Badge */}
                 <div className="absolute bottom-3 left-3 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/15 text-[11px] font-mono-code text-white/90">
                   <MapPin className="w-3 h-3 text-cyan-400" />
