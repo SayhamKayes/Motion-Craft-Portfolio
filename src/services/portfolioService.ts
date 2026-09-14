@@ -155,10 +155,12 @@ export function subscribeToMessages(callback: (messages: ContactMessage[]) => vo
   return onSnapshot(
     msgRef,
     (snap) => {
-      const items = snap.docs.map((d) => ({
-        ...d.data(),
-        id: d.id,
-      })) as ContactMessage[];
+      const items = snap.docs
+        .filter((d) => !d.data().isTestimonial)
+        .map((d) => ({
+          ...d.data(),
+          id: d.id,
+        })) as ContactMessage[];
       // sort by date descending
       items.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
       callback(items);
