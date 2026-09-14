@@ -14,7 +14,7 @@ export const SectionIndicator: React.FC<SectionIndicatorProps> = ({
   onNavigate,
   soundEnabled,
 }) => {
-  const sectionLabels = ['HOME', 'WORKS', 'ABOUT', 'SKILLS', 'CONTACT'];
+  const sectionLabels = ['HOME', 'WORKS', 'ABOUT', 'SKILLS', 'TESTIMONIALS', 'CONTACT'];
 
   return (
     <div
