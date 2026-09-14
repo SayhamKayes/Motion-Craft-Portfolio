@@ -20,8 +20,12 @@ import {
   AlertTriangle,
   ArrowUp,
   ArrowDown,
+  MessageSquare,
+  Star,
 } from 'lucide-react';
-import { Profile, Project, Skill, SiteSettings, ContactMessage } from '../types';
+import { ContactMessage, Profile, Project, SiteSettings, Skill, Testimonial } from '../types';
+import { addTestimonial, deleteTestimonial, getTestimonials, subscribeToTestimonials, updateTestimonial } from '../services/firebaseTestimonials';
+import { COUNTRIES } from '../constants/countries';
 import {
   updateProfile,
   updateSettings,
@@ -56,7 +60,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
   settings,
   messages,
 }) => {
-  const [activeTab, setActiveTab] = useState<'profile' | 'projects' | 'skills' | 'messages' | 'settings'>('projects');
+  const [activeTab, setActiveTab] = useState<'profile' | 'projects' | 'skills' | 'messages' | 'settings' | 'testimonials'>('projects');
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [loadingTestimonials, setLoadingTestimonials] = useState(false);
+  const [isAddingTestimonial, setIsAddingTestimonial] = useState(false);
+  const [editingTestimonial, setEditingTestimonial] = useState<Testimonial | null>(null);
+  const [testimonialForm, setTestimonialForm] = useState<{name: string, role: string, country: string, rating: number, message: string, image?: string | null}>({ name: '', role: '', country: '', rating: 5, message: '', image: null });
   const [isAuthenticated, setIsAuthenticated] = useState(true); // Default accessible for seamless live CMS experience
   const [passcode, setPasscode] = useState('');
   const [authError, setAuthError] = useState('');
@@ -112,6 +121,61 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
     setSettingsForm(settings);
   }, [settings]);
 
+  React.useEffect(() => {
+    if (activeTab === 'testimonials' && isOpen) {
+      setLoadingTestimonials(true);
+      const unsubscribe = subscribeToTestimonials((data) => {
+        setTestimonials(data);
+        setLoadingTestimonials(false);
+      });
+      return () => unsubscribe();
+    }
+  }, [activeTab, isOpen]);
+
+  const loadTestimonials = async () => {
+    setLoadingTestimonials(true);
+    const data = await getTestimonials();
+    setTestimonials(data);
+    setLoadingTestimonials(false);
+  };
+
+  const handleTestimonialStatus = async (id: string, status: 'approved' | 'rejected') => {
+    await updateTestimonial(id, { status });
+    loadTestimonials();
+    playSound('success', settings.soundEnabled);
+  };
+
+  const handleDeleteTestimonial = async (id: string) => {
+    if (!window.confirm('Are you sure you want to delete this testimonial?')) return;
+    await deleteTestimonial(id);
+    loadTestimonials();
+    playSound('click', settings.soundEnabled);
+  };
+
+  const handleSaveTestimonial = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (editingTestimonial) {
+      await updateTestimonial(editingTestimonial.id, {
+        name: testimonialForm.name,
+        role: testimonialForm.role,
+        country: testimonialForm.country,
+        rating: testimonialForm.rating,
+        message: testimonialForm.message,
+        image: testimonialForm.image,
+      });
+      setEditingTestimonial(null);
+    } else {
+      await addTestimonial({
+        ...testimonialForm,
+        isAdminAdded: true,
+        status: 'approved' // Automatically approved when added by admin
+      });
+    }
+    setTestimonialForm({ name: '', role: '', country: '', rating: 5, message: '', image: null });
+    setIsAddingTestimonial(false);
+    playSound('success', settings.soundEnabled);
+  };
+
   if (!isOpen) return null;
 
   const handleProfileSave = async (e: React.FormEvent) => {
@@ -122,7 +186,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
       setProfileSaving(false);
       setProfileSuccess(true);
       playSound('success', settings.soundEnabled);
-      setTimeout(() => setProfileSuccess(false), 3000);
+      setTimeout(() => window.location.reload(), 500);
     } catch (err) {
       console.error(err);
       setProfileSaving(false);
@@ -144,6 +208,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
         setIsAddingProject(false);
       }
       playSound('success', settings.soundEnabled);
+      setTimeout(() => window.location.reload(), 500);
     } catch (err) {
       console.error(err);
     }
@@ -154,6 +219,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
     try {
       await deleteProject(id);
       playSound('click', settings.soundEnabled);
+      setTimeout(() => window.location.reload(), 500);
     } catch (err) {
       console.error(err);
     }
@@ -170,6 +236,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
         setIsAddingSkill(false);
       }
       playSound('success', settings.soundEnabled);
+      setTimeout(() => window.location.reload(), 500);
     } catch (err) {
       console.error(err);
     }
@@ -180,6 +247,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
     try {
       await deleteSkill(id);
       playSound('click', settings.soundEnabled);
+      setTimeout(() => window.location.reload(), 500);
     } catch (err) {
       console.error(err);
     }
@@ -197,6 +265,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
       await updateSkill(currentSkill.id, { order: targetSkill.order });
       await updateSkill(targetSkill.id, { order: currentSkill.order });
       playSound('click', settings.soundEnabled);
+      // Not reloading on move to avoid jarring experience, it updates via onSnapshot
     } catch (err) {
       console.error(err);
     }
@@ -210,6 +279,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
     setSettingsForm(merged);
     await updateSettings(merged);
     playSound('toggle', merged.soundEnabled);
+    setTimeout(() => window.location.reload(), 500);
   };
 
   const handleResetDefaults = async () => {
@@ -276,6 +346,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
             { id: 'projects', label: 'Works & Projects', icon: Briefcase, count: projects.length },
             { id: 'skills', label: 'Skills & Tech', icon: Cpu, count: skills.length },
             { id: 'profile', label: 'Creator Profile', icon: User },
+            { id: 'testimonials', label: 'Testimonials', icon: MessageSquare, count: testimonials.length },
             { id: 'messages', label: 'Inquiries Inbox', icon: Mail, count: messages.filter((m) => !m.read).length },
             { id: 'settings', label: 'Site Settings', icon: Settings },
           ].map((tab) => {
@@ -985,6 +1056,278 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
             </form>
           )}
 
+          {/* TAB 6: TESTIMONIALS */}
+          {activeTab === 'testimonials' && (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-display font-bold text-lg text-white">
+                    Testimonials &amp; Reviews ({testimonials.length})
+                  </h3>
+                  <p className="text-xs text-white/50 font-mono-code">
+                    Manage reviews submitted by visitors. Approve them to display on the site.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => {
+                      setIsAddingTestimonial(!isAddingTestimonial);
+                      setEditingTestimonial(null);
+                      setTestimonialForm({ name: '', role: '', country: '', rating: 5, message: '', image: null });
+                    }}
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs font-mono-code transition-all"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>{isAddingTestimonial || editingTestimonial ? 'Cancel' : 'Add Review'}</span>
+                  </button>
+                  <button
+                    onClick={loadTestimonials}
+                    className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-mono-code transition-all"
+                  >
+                    Refresh
+                  </button>
+                </div>
+              </div>
+
+              {/* Add / Edit Testimonial Form */}
+              {(isAddingTestimonial || editingTestimonial) && (
+                <form
+                  onSubmit={handleSaveTestimonial}
+                  className="p-5 rounded-xl glass-panel-light border border-teal-500/30 space-y-4 mb-6 relative overflow-hidden"
+                >
+                  <div className="absolute top-0 left-0 w-1 h-full bg-teal-500" />
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-display font-bold text-white text-sm">
+                      {editingTestimonial ? 'Edit Review' : 'Add New Review'}
+                    </h4>
+                    <span className="text-[10px] font-mono-code text-teal-400 uppercase">Admin Entry</span>
+                  </div>
+
+                  <div className="mb-4">
+                    <label className="block text-[10px] font-mono-code text-white/50 mb-1">Profile Picture (Optional)</label>
+                    <div className="flex items-center gap-4">
+                      {testimonialForm.image ? (
+                        <div className="relative w-12 h-12 rounded-full overflow-hidden border border-teal-500/50">
+                          <img src={testimonialForm.image} alt="Preview" className="w-full h-full object-cover" />
+                          <button
+                            type="button"
+                            onClick={() => setTestimonialForm({ ...testimonialForm, image: null })}
+                            className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity"
+                          >
+                            <X className="w-3 h-3 text-white" />
+                          </button>
+                        </div>
+                      ) : (
+                        <label className="w-12 h-12 rounded-full bg-black/40 border border-white/10 flex items-center justify-center cursor-pointer hover:border-teal-500/50 hover:bg-white/5 transition-all text-white/50 hover:text-teal-400">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                const reader = new FileReader();
+                                reader.onloadend = () => {
+                                  setTestimonialForm({ ...testimonialForm, image: reader.result as string });
+                                };
+                                reader.readAsDataURL(file);
+                              }
+                            }}
+                          />
+                          <Plus className="w-4 h-4" />
+                        </label>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[10px] font-mono-code text-white/50 mb-1">Name</label>
+                      <input
+                        type="text"
+                        value={testimonialForm.name}
+                        onChange={(e) => setTestimonialForm({ ...testimonialForm, name: e.target.value })}
+                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-mono-code text-white/50 mb-1">Role/Company</label>
+                      <input
+                        type="text"
+                        value={testimonialForm.role}
+                        onChange={(e) => setTestimonialForm({ ...testimonialForm, role: e.target.value })}
+                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-mono-code text-white/50 mb-1">Country</label>
+                    <div className="relative">
+                      <select
+                        value={testimonialForm.country}
+                        onChange={(e) => setTestimonialForm({ ...testimonialForm, country: e.target.value })}
+                        className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none appearance-none pr-8 cursor-pointer"
+                      >
+                        <option value="" className="bg-gray-900 text-white">Select Country</option>
+                        {COUNTRIES.map((c) => (
+                          <option key={c} value={c} className="bg-gray-900 text-white">{c}</option>
+                        ))}
+                      </select>
+                      <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-white/50">
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-mono-code text-white/50 mb-1">Rating (1-5)</label>
+                    <input
+                      type="number"
+                      min="1"
+                      max="5"
+                      required
+                      value={testimonialForm.rating}
+                      onChange={(e) => setTestimonialForm({ ...testimonialForm, rating: parseInt(e.target.value) || 5 })}
+                      className="w-full sm:w-1/3 px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-mono-code text-white/50 mb-1">Review Message</label>
+                    <textarea
+                      rows={3}
+                      required
+                      value={testimonialForm.message}
+                      onChange={(e) => setTestimonialForm({ ...testimonialForm, message: e.target.value })}
+                      className="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none resize-none"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="px-6 py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-mono-code text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all shadow-[0_0_15px_rgba(20,184,166,0.3)]"
+                  >
+                    <Save className="w-4 h-4" />
+                    <span>{editingTestimonial ? 'Update Review' : 'Save Review'}</span>
+                  </button>
+                </form>
+              )}
+
+              {/* Filtering Controls */}
+              <div className="p-4 rounded-xl glass-panel-light border border-white/10 space-y-4 mb-4">
+
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center text-xs font-mono-code">
+                    <span className="text-white">Filter Reviews to Show</span>
+                    <select
+                      value={settingsForm.testimonialMinRating || 1}
+                      onChange={(e) => handleSettingsUpdate({ testimonialMinRating: parseInt(e.target.value) })}
+                      className="px-3 py-1.5 rounded-lg bg-black/50 border border-white/10 text-xs text-white focus:border-teal-400 focus:outline-none appearance-none"
+                    >
+                      <option value={5}>Only 5 Star Reviews</option>
+                      <option value={4}>4+ Star Reviews</option>
+                      <option value={1}>Show All Reviews</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {loadingTestimonials ? (
+                <div className="py-10 text-center text-white/50">Loading testimonials...</div>
+              ) : testimonials.length === 0 ? (
+                <div className="py-16 text-center text-white/40 font-mono-code text-xs">
+                  No testimonials received yet.
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {testimonials.map((t) => (
+                    <div
+                      key={t.id}
+                      className={`p-4 rounded-xl border transition-all ${
+                        t.status === 'approved'
+                          ? 'glass-panel-light border-emerald-500/30'
+                          : t.status === 'rejected'
+                          ? 'glass-panel-light border-rose-500/30 opacity-70'
+                          : 'bg-teal-950/20 border-yellow-500/40 shadow-md'
+                      }`}
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-white text-sm">{t.name || 'Anonymous'}</span>
+                          <span className="text-xs text-white/60">({t.role || 'No Role'}{t.country ? `, ${t.country}` : ''})</span>
+                          {t.status === 'pending' && (
+                            <span className="px-1.5 py-0.5 rounded bg-yellow-500 text-[9px] font-mono-code text-white">
+                              PENDING
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className={`w-3.5 h-3.5 ${
+                                i < t.rating ? 'text-yellow-400 fill-yellow-400' : 'text-white/20'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+
+                      <p className="text-xs text-white/80 font-body leading-relaxed mb-3">
+                        "{t.message}"
+                      </p>
+
+                      <div className="flex items-center justify-between pt-3 border-t border-white/10">
+                        <span className="text-[10px] font-mono-code text-white/40">
+                          {new Date(t.createdAt).toLocaleString()}
+                        </span>
+                        <div className="flex items-center gap-2">
+                          {t.status !== 'approved' && (
+                            <button
+                              onClick={() => handleTestimonialStatus(t.id, 'approved')}
+                              className="px-2 py-1 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30"
+                            >
+                              Approve
+                            </button>
+                          )}
+                          {t.status !== 'rejected' && (
+                            <button
+                              onClick={() => handleTestimonialStatus(t.id, 'rejected')}
+                              className="px-2 py-1 rounded text-[10px] font-bold bg-rose-500/20 text-rose-400 hover:bg-rose-500/30"
+                            >
+                              Reject
+                            </button>
+                          )}
+                          {t.isAdminAdded && (
+                            <button
+                              onClick={() => {
+                                setEditingTestimonial(t);
+                                setTestimonialForm({ name: t.name, role: t.role, country: t.country || '', rating: t.rating, message: t.message, image: t.image || null });
+                                setIsAddingTestimonial(false);
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                              }}
+                              className="p-1 rounded text-cyan-400 hover:bg-cyan-500/20 ml-2"
+                              title="Edit Review"
+                            >
+                              <Edit2 className="w-3.5 h-3.5" />
+                            </button>
+                          )}
+                          <button
+                            onClick={() => handleDeleteTestimonial(t.id)}
+                            className="p-1 rounded text-rose-400 hover:bg-rose-500/20 ml-2"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
           {/* TAB 4: INQUIRIES / MESSAGES */}
           {activeTab === 'messages' && (
             <div className="space-y-4">
@@ -1135,6 +1478,48 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     }
                     className="w-full accent-cyan-400"
                   />
+                </div>
+
+                {/* Testimonials Filter Settings */}
+                <div className="p-4 rounded-xl glass-panel-light border border-white/10 space-y-4">
+                  <div>
+                    <div className="text-sm font-display font-bold text-white">Testimonials Filtering</div>
+                    <div className="text-xs text-white/50 font-mono-code">
+                      Control which testimonials are shown to public visitors
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                    <span className="text-xs font-mono-code text-white">Only Show Approved Reviews</span>
+                    <button
+                      onClick={() => handleSettingsUpdate({ showOnlyApprovedTestimonials: !settingsForm.showOnlyApprovedTestimonials })}
+                      className={`px-4 py-1.5 rounded-full font-mono-code text-xs font-bold transition-all ${
+                        settingsForm.showOnlyApprovedTestimonials
+                          ? 'bg-emerald-500 text-white'
+                          : 'bg-white/10 text-white/60'
+                      }`}
+                    >
+                      {settingsForm.showOnlyApprovedTestimonials ? 'YES' : 'NO'}
+                    </button>
+                  </div>
+
+                  <div className="space-y-2 pt-2 border-t border-white/10">
+                    <div className="flex justify-between text-xs font-mono-code">
+                      <span className="text-white">Minimum Star Rating to Show</span>
+                      <span className="text-yellow-400 font-bold">{settingsForm.testimonialMinRating} Stars</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="1"
+                      max="5"
+                      step="1"
+                      value={settingsForm.testimonialMinRating}
+                      onChange={(e) =>
+                        handleSettingsUpdate({ testimonialMinRating: parseInt(e.target.value) })
+                      }
+                      className="w-full accent-yellow-400"
+                    />
+                  </div>
                 </div>
 
                 {/* Admin CMS Credentials */}
