@@ -249,12 +249,8 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="font-display font-black text-lg text-white">
-                  Kuon Yagi Portfolio CMS
+                  Admin Panel
                 </h2>
-                <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-mono-code border border-emerald-500/30 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  FIRESTORE LIVE
-                </span>
               </div>
               <p className="text-xs text-white/50 font-mono-code">
                 Manage all site content, projects, skills, inquiries &amp; settings
@@ -293,21 +289,19 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   playSound('hover', settings.soundEnabled);
                   setActiveTab(tab.id as typeof activeTab);
                 }}
-                className={`px-3.5 py-2 rounded-xl text-xs font-mono-code flex items-center gap-2 transition-all whitespace-nowrap ${
-                  isActive
-                    ? 'bg-teal-600/30 text-white border border-teal-400/50 font-semibold shadow-[0_0_12px_rgba(20,184,166,0.25)]'
-                    : 'text-white/60 hover:text-white hover:bg-white/[0.04]'
-                }`}
+                className={`px-3.5 py-2 rounded-xl text-xs font-mono-code flex items-center gap-2 transition-all whitespace-nowrap ${isActive
+                  ? 'bg-teal-600/30 text-white border border-teal-400/50 font-semibold shadow-[0_0_12px_rgba(20,184,166,0.25)]'
+                  : 'text-white/60 hover:text-white hover:bg-white/[0.04]'
+                  }`}
               >
                 <Icon className="w-3.5 h-3.5" />
                 <span>{tab.label}</span>
                 {tab.count !== undefined && (
                   <span
-                    className={`px-1.5 py-0.2 rounded-full text-[10px] ${
-                      tab.id === 'messages' && tab.count > 0
-                        ? 'bg-emerald-500 text-white font-bold animate-pulse'
-                        : 'bg-white/10 text-white/70'
-                    }`}
+                    className={`px-1.5 py-0.2 rounded-full text-[10px] ${tab.id === 'messages' && tab.count > 0
+                      ? 'bg-emerald-500 text-white font-bold animate-pulse'
+                      : 'bg-white/10 text-white/70'
+                      }`}
                   >
                     {tab.count}
                   </span>
@@ -1014,11 +1008,10 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   {messages.map((msg) => (
                     <div
                       key={msg.id}
-                      className={`p-4 rounded-xl border transition-all ${
-                        msg.read
-                          ? 'glass-panel-light border-white/5 opacity-70'
-                          : 'bg-teal-950/20 border-teal-500/40 shadow-md'
-                      }`}
+                      className={`p-4 rounded-xl border transition-all ${msg.read
+                        ? 'glass-panel-light border-white/5 opacity-70'
+                        : 'bg-teal-950/20 border-teal-500/40 shadow-md'
+                        }`}
                     >
                       <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                         <div className="flex items-center gap-2">
@@ -1095,11 +1088,10 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   </div>
                   <button
                     onClick={() => handleSettingsUpdate({ soundEnabled: !settingsForm.soundEnabled })}
-                    className={`px-4 py-1.5 rounded-full font-mono-code text-xs font-bold transition-all ${
-                      settingsForm.soundEnabled
-                        ? 'bg-cyan-500 text-black'
-                        : 'bg-white/10 text-white/60'
-                    }`}
+                    className={`px-4 py-1.5 rounded-full font-mono-code text-xs font-bold transition-all ${settingsForm.soundEnabled
+                      ? 'bg-cyan-500 text-black'
+                      : 'bg-white/10 text-white/60'
+                      }`}
                   >
                     {settingsForm.soundEnabled ? 'ENABLED' : 'DISABLED'}
                   </button>
@@ -1117,11 +1109,10 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     onClick={() =>
                       handleSettingsUpdate({ parallaxEnabled: !settingsForm.parallaxEnabled })
                     }
-                    className={`px-4 py-1.5 rounded-full font-mono-code text-xs font-bold transition-all ${
-                      settingsForm.parallaxEnabled
-                        ? 'bg-cyan-500 text-black'
-                        : 'bg-white/10 text-white/60'
-                    }`}
+                    className={`px-4 py-1.5 rounded-full font-mono-code text-xs font-bold transition-all ${settingsForm.parallaxEnabled
+                      ? 'bg-cyan-500 text-black'
+                      : 'bg-white/10 text-white/60'
+                      }`}
                   >
                     {settingsForm.parallaxEnabled ? 'ACTIVE' : 'OFF'}
                   </button>
@@ -1146,30 +1137,6 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   />
                 </div>
 
-                {/* Japanese Kanji Overlay */}
-                <div className="p-4 rounded-xl glass-panel-light border border-white/10 flex items-center justify-between">
-                  <div>
-                    <div className="text-sm font-display font-bold text-white">
-                      Japanese Kanji Typography Accents
-                    </div>
-                    <div className="text-xs text-white/50 font-mono-code">
-                      Renders vertical traditional calligraphy watermark ideograms (八木, 動, 創, 匠)
-                    </div>
-                  </div>
-                  <button
-                    onClick={() =>
-                      handleSettingsUpdate({ showJapaneseKanji: !settingsForm.showJapaneseKanji })
-                    }
-                    className={`px-4 py-1.5 rounded-full font-mono-code text-xs font-bold transition-all ${
-                      settingsForm.showJapaneseKanji
-                        ? 'bg-cyan-500 text-black'
-                        : 'bg-white/10 text-white/60'
-                    }`}
-                  >
-                    {settingsForm.showJapaneseKanji ? 'SHOWN' : 'HIDDEN'}
-                  </button>
-                </div>
-
                 {/* Admin CMS Credentials */}
                 <div className="p-4 rounded-xl glass-panel-light border border-white/10 space-y-4 mt-6">
                   <div>
@@ -1180,7 +1147,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                       Change the username, password, and recovery email for the admin login
                     </div>
                   </div>
-                  
+
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
                       <label className="block text-[10px] text-white/40 uppercase tracking-widest font-mono-code mb-1">
@@ -1218,14 +1185,14 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   </div>
                 </div>
 
-                {/* Reset to Kuon Yagi Defaults */}
+                {/* Reset to Data */}
                 <div className="mt-8 p-4 rounded-xl border border-rose-500/30 bg-rose-950/10 flex items-center justify-between">
                   <div>
                     <div className="text-sm font-display font-bold text-rose-300">
-                      Reset Portfolio to Original Kuon Yagi Data
+                      Reset Portfolio to Original Data
                     </div>
                     <div className="text-xs text-white/50 font-mono-code">
-                      Restores all default projects, skills, and bio content into Firestore
+                      Restores all default projects, skills, and bio content
                     </div>
                   </div>
                   <button
