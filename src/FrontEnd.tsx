@@ -7,9 +7,11 @@ import { HomeSection } from './components/sections/HomeSection';
 import { WorksSection } from './components/sections/WorksSection';
 import { AboutSection } from './components/sections/AboutSection';
 import { SkillsSection } from './components/sections/SkillsSection';
+import { TestimonialsSection } from './components/sections/TestimonialsSection';
 import { ContactSection } from './components/sections/ContactSection';
 import { ProjectModal } from './components/ProjectModal';
 import { AllWorksView } from './components/AllWorksView';
+import { TestimonialModal } from './components/TestimonialModal';
 import { Profile, Project, Skill, SiteSettings, ContactMessage } from './types';
 import { playSound } from './utils/audio';
 export default function FrontEnd({
@@ -26,8 +28,9 @@ export default function FrontEnd({
   const [activeSection, setActiveSection] = useState<number>(0);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isAllWorksOpen, setIsAllWorksOpen] = useState<boolean>(false);
+  const [isTestimonialModalOpen, setIsTestimonialModalOpen] = useState<boolean>(false);
 
-  const totalSections = 5;
+  const totalSections = 6;
   const isScrollingRef = useRef<boolean>(false);
   const touchStartYRef = useRef<number>(0);
 
@@ -218,7 +221,7 @@ export default function FrontEnd({
           profile={profile}
           settings={settings}
           onExploreWorks={() => navigateToSection(1)}
-          onContactClick={() => navigateToSection(4)}
+          onContactClick={() => navigateToSection(5)}
         />
 
         {/* Section 02: WORKS */}
@@ -236,7 +239,7 @@ export default function FrontEnd({
           profile={profile}
           settings={settings}
           onNavigateSkills={() => navigateToSection(3)}
-          onNavigateContact={() => navigateToSection(4)}
+          onNavigateContact={() => navigateToSection(5)}
         />
 
         {/* Section 04: SKILLS */}
@@ -246,9 +249,16 @@ export default function FrontEnd({
           settings={settings}
         />
 
-        {/* Section 05: CONTACT */}
-        <ContactSection
+        {/* Section 05: TESTIMONIALS */}
+        <TestimonialsSection
           isActive={activeSection === 4}
+          settings={settings}
+          onOpenReviewModal={() => setIsTestimonialModalOpen(true)}
+        />
+
+        {/* Section 06: CONTACT */}
+        <ContactSection
+          isActive={activeSection === 5}
           profile={profile}
           settings={settings}
         />
@@ -267,6 +277,14 @@ export default function FrontEnd({
         project={selectedProject}
         onClose={() => setSelectedProject(null)}
       />
+
+      {/* Testimonial Review Modal */}
+      {isTestimonialModalOpen && (
+        <TestimonialModal
+          onClose={() => setIsTestimonialModalOpen(false)}
+          onSuccess={() => setIsTestimonialModalOpen(false)}
+        />
+      )}
     </div>
   );
 }
