@@ -58,12 +58,14 @@ export const AdminApp = ({
 
     setIsRecovering(true);
     try {
-      // Replace these placeholders with actual EmailJS credentials
-      const SERVICE_ID = 'YOUR_SERVICE_ID';
-      const TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-      const PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+      // Read EmailJS credentials from .env
+      const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+      
+      console.log('Env variables:', { SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY });
 
-      if (SERVICE_ID === 'YOUR_SERVICE_ID') {
+      if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY || SERVICE_ID === 'YOUR_SERVICE_ID') {
          // Fallback/Demo mode if keys aren't provided
          playSound('success', settings.soundEnabled);
          setRecoveryMessage(`(Demo Mode) Password would be sent to ${validEmail}. Since no EmailJS keys were provided, your password is: ${settings.adminPassword || 'admin123'}`);
