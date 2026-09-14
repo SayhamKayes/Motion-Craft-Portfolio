@@ -73,7 +73,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
       >
         <div className="flex items-center gap-2 text-xs font-mono-code text-cyan-400 uppercase tracking-widest mb-1">
           <Mail className="w-3.5 h-3.5" />
-          <span>05 / Communication</span>
+          <span>06 / Communication</span>
         </div>
         <h2 className="font-display font-black text-3xl sm:text-5xl text-white tracking-tight">
           Let&apos;s Build Together
