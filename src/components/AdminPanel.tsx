@@ -1170,6 +1170,54 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   </button>
                 </div>
 
+                {/* Admin CMS Credentials */}
+                <div className="p-4 rounded-xl glass-panel-light border border-white/10 space-y-4 mt-6">
+                  <div>
+                    <div className="text-sm font-display font-bold text-white">
+                      Admin CMS Credentials
+                    </div>
+                    <div className="text-xs text-white/50 font-mono-code mb-4">
+                      Change the username, password, and recovery email for the admin login
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div>
+                      <label className="block text-[10px] text-white/40 uppercase tracking-widest font-mono-code mb-1">
+                        Admin Username
+                      </label>
+                      <input
+                        type="text"
+                        value={settingsForm.adminUsername || ''}
+                        onChange={(e) => handleSettingsUpdate({ adminUsername: e.target.value })}
+                        className="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-sm text-white font-mono-code focus:border-teal-500/50 outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] text-white/40 uppercase tracking-widest font-mono-code mb-1">
+                        Admin Password
+                      </label>
+                      <input
+                        type="text"
+                        value={settingsForm.adminPassword || ''}
+                        onChange={(e) => handleSettingsUpdate({ adminPassword: e.target.value })}
+                        className="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-sm text-white font-mono-code focus:border-teal-500/50 outline-none"
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className="block text-[10px] text-white/40 uppercase tracking-widest font-mono-code mb-1">
+                        Recovery Email Address (For Forgot Password)
+                      </label>
+                      <input
+                        type="email"
+                        value={settingsForm.adminEmail || ''}
+                        onChange={(e) => handleSettingsUpdate({ adminEmail: e.target.value })}
+                        className="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-sm text-white font-mono-code focus:border-teal-500/50 outline-none"
+                      />
+                    </div>
+                  </div>
+                </div>
+
                 {/* Reset to Kuon Yagi Defaults */}
                 <div className="mt-8 p-4 rounded-xl border border-rose-500/30 bg-rose-950/10 flex items-center justify-between">
                   <div>
