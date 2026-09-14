@@ -9,7 +9,6 @@ interface NavigationProps {
   profile: Profile;
   settings: SiteSettings;
   onToggleSound: () => void;
-  onOpenAdmin: () => void;
 }
 
 export const Navigation: React.FC<NavigationProps> = ({
@@ -18,7 +17,6 @@ export const Navigation: React.FC<NavigationProps> = ({
   profile,
   settings,
   onToggleSound,
-  onOpenAdmin,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -115,20 +113,6 @@ export const Navigation: React.FC<NavigationProps> = ({
             )}
           </button>
 
-          {/* Admin Portal Button */}
-          <button
-            id="admin-portal-open-btn"
-            onClick={() => {
-              playSound('click', settings.soundEnabled);
-              onOpenAdmin();
-            }}
-            className="px-3 py-2 rounded-full border border-teal-500/40 bg-teal-950/30 text-teal-300 hover:bg-teal-900/40 hover:border-teal-400 transition-all text-xs font-mono-code flex items-center gap-2 shadow-[0_0_15px_rgba(20,184,166,0.15)]"
-            title="Manage Portfolio Content & Database"
-          >
-            <Shield className="w-3.5 h-3.5 text-teal-400" />
-            <span className="hidden sm:inline text-[11px] tracking-wider font-semibold">ADMIN CMS</span>
-          </button>
-
           {/* Mobile Hamburger Toggle */}
           <button
             id="mobile-menu-toggle-btn"
@@ -177,15 +161,6 @@ export const Navigation: React.FC<NavigationProps> = ({
 
           <div className="mt-12 pt-6 border-t border-white/10 flex items-center justify-between text-xs text-white/50 font-mono-code">
             <span>Dhaka, Bangladesh</span>
-            <button
-              onClick={() => {
-                onOpenAdmin();
-                setMobileMenuOpen(false);
-              }}
-              className="text-teal-400 hover:text-teal-300 underline underline-offset-4"
-            >
-              Open Admin CMS →
-            </button>
           </div>
         </div>
       )}
