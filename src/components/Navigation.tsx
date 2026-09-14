@@ -25,7 +25,8 @@ export const Navigation: React.FC<NavigationProps> = ({
     { num: '02', label: 'WORKS' },
     { num: '03', label: 'ABOUT' },
     { num: '04', label: 'SKILLS' },
-    { num: '05', label: 'CONTACT' },
+    { num: '05', label: 'TESTIMONIALS' },
+    { num: '06', label: 'CONTACT' },
   ];
 
   const handleNavClick = (idx: number) => {
