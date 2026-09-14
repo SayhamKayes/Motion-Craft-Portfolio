@@ -65,4 +65,19 @@ export interface SiteSettings {
   adminUsername?: string;
   adminPassword?: string;
   adminEmail?: string;
+  testimonialMinRating?: number; // Minimum stars to show, e.g., 4
+  showOnlyApprovedTestimonials?: boolean; // Default should be true to avoid spam
+}
+
+export interface Testimonial {
+  id: string;
+  name: string;
+  role: string;
+  country?: string;
+  rating: number; // 1 to 5
+  message: string;
+  image?: string; // Base64 or URL
+  status: 'pending' | 'approved' | 'rejected';
+  isAdminAdded?: boolean;
+  createdAt: string;
 }
