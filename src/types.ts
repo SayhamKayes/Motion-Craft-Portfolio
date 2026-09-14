@@ -62,4 +62,7 @@ export interface SiteSettings {
   parallaxIntensity: number; // e.g. 1.0
   snapScrollEnabled: boolean;
   showJapaneseKanji: boolean;
+  adminUsername?: string;
+  adminPassword?: string;
+  adminEmail?: string;
 }
