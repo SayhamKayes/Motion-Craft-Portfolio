@@ -184,4 +184,7 @@ export const initialSettings: SiteSettings = {
   parallaxIntensity: 1.0,
   snapScrollEnabled: true,
   showJapaneseKanji: true,
+  adminUsername: 'admin',
+  adminPassword: 'admin123',
+  adminEmail: 'sayhamkayes@gmail.com',
 };
